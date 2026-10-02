@@ -4,7 +4,7 @@
 
 這份 playbook 整理個人採用的治理原則與可重用範例, 適合自己換電腦時回查, 也適合團隊討論如何讓 agent 工作保持範圍清楚, context 連續與結果可驗證
 
-[codex-setup](https://github.com/gaze9999/codex-setup) 維護可安裝的 global 指示, Custom Skills 與操作工具; 這裡維護教學, 判斷理由與示例 所有範例均經抽象化, 使用通用模組與 placeholder, 不包含實際專案或對話紀錄
+[codex-setup](https://github.com/gaze9999/codex-setup) 維護可安裝的 global 指示, Custom Skills 與操作工具; 這裡整理工作流, 提示詞, 治理原則與使用範例
 
 ## 來源與責任
 
@@ -12,7 +12,7 @@
 |---|---|
 | [my-py-tools](https://github.com/gaze9999/my-py-tools) | 獨立於 Codex 的通用 CLI / Python 工具與可重用 core |
 | [codex-setup](https://github.com/gaze9999/codex-setup) | Codex Skills, agent 指示, configuration 與 adapter 安裝; 依版本使用通用 core, 不複製維護 core |
-| codex-playbook | 可分享且去識別化的方法, 解說與範例 |
+| codex-playbook | 工作方法, 解說與範例 |
 | 個人 Notion | 個人 context, 偏好, 學習筆記與未公開工作紀錄 |
 | Project 文件 | 實際專案規格, 已確認決策, 進度與驗收證據 |
 
@@ -58,4 +58,4 @@ Codex 的可用 model, 工具, 權限與 configuration 規則可能改變; 使�
 
 操作工具的變更先回到 codex-setup; 教學的判斷理由與範例在這裡維護 來源更新後, 檢查受影響的解說, 連結與 prompt, 避免在兩個 repository 維護同一份 executable Skill
 
-本 repository 以 main 分支的文件為目前版本; 文件檢查後 commit / push 即完成更新, 不另做版本號, tag, GitHub Release 或附件封裝. 需要固定引用時使用 commit permalink; 既有 tags / releases 僅為歷史紀錄. codex-setup 與 my-py-tools 的可安裝產物仍各自遵循版本與 release 流程
+本 repository 以 main 分支的文件為目前版本; 文件檢查後 commit / push 即完成更新, 不另做版本號, tag, GitHub Release 或附件封裝. 需要固定引用時使用 commit permalink. codex-setup 與 my-py-tools 的可安裝產物仍各自遵循版本與 release 流程

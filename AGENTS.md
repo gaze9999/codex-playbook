@@ -12,4 +12,4 @@
 - 文件範例不授予 task creation, messaging, automation 或 publication 權限
 - 以易理解為主; 流程與責任適合時用 Mermaid, 比較用表格, 需要操作才有助理解時用互動視覺化, 簡單內容保留文字; 圖中關係須與正文一致
 
-- 本 repository 是持續維護的文件, 檢查後依授權 commit / push 至 main 即完成發布; 不例行升版本, 打 tag, 建立 GitHub Release 或封裝附件. 一般跨 repo 的 release 授權不套用到這裡, 除非使用者明確指定本 repo 的某次 release. 既有 tags / releases 僅為歷史紀錄
+- 本 repository 是持續維護的文件, 檢查後依授權 commit / push 至 main 即完成發布; 不例行升版本, 打 tag, 建立 GitHub Release 或封裝附件. 一般跨 repo 的 release 授權不套用到這裡, 除非使用者明確指定本 repo 的某次 release
