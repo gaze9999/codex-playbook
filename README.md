@@ -57,3 +57,5 @@ Codex 的可用 model, 工具, 權限與 configuration 規則可能改變; 使�
 引用單一段落時, 同時保留它的條件與證據限制 將具體專案做法改成自己的模組名稱, 來源位置與驗收條件, 不直接複製成全域規則
 
 操作工具的變更先回到 codex-setup; 教學的判斷理由與範例在這裡維護 來源更新後, 檢查受影響的解說, 連結與 prompt, 避免在兩個 repository 維護同一份 executable Skill
+
+本 repository 以 main 分支的文件為目前版本; 文件檢查後 commit / push 即完成更新, 不另做版本號, tag, GitHub Release 或附件封裝. 需要固定引用時使用 commit permalink; 既有 tags / releases 僅為歷史紀錄. codex-setup 與 my-py-tools 的可安裝產物仍各自遵循版本與 release 流程
