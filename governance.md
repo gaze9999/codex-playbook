@@ -17,6 +17,16 @@ Configuration 決定可用設定, runtime permissions 決定可做動作, instru
 
 若來源衝突, 先確認 authority 與適用範圍; 不把最長, 最新修改或最先搜尋到的文件直接當成最高權威 確定的使用者授權與治理限制需在交接後保留
 
+## Global, Role, Skill 與 Python core 的取捨
+
+不以檔案數或長度決定拆合; 先比較觸發條件, 責任, 可獨立驗收的輸出與維護成本. 本輪保留 23 個 Skills 的獨立入口, 同一流程的細節移到按需 references, 不把不同工作合成必須全部載入的大 Skill
+
+穩定的語言, 程式風格, 授權與驗證偏好保留 Global; 若移到可選 Skill, 可能在未觸發時遺漏. Project / nested AGENTS 保留實際 runtime 與介面限制; Role 只保存 ownership, permissions 與必要 model 設定, 不重複全域規則或用另一份 prompt 維護同一流程
+
+不依賴 Codex 的確定性功能可抽成版本化 Python core, 供 CLI / GUI / MCP / Skill 共用; Skill 保留何時使用, 輸入判讀, 邊界與驗收. 若需要 standalone snapshot, 從 canonical source 產生並記錄版本與 hash, 不手動維護兩份演算法. 抽取前核對錯誤, 寫入與備份語意; 詳見 [工具化次序](toolkit-roadmap.md)
+
+Desktop 設定有獨立來源, 不塞入 AGENTS: prompt 與可攜偏好由 codex-setup 管理, 未確認的 UI-only 設定透過手動操作與 readback 紀錄. 記憶內容, 自訂權限規則中的私人路徑與登入狀態不進公開工具包
+
 ## Evidence record
 
 在既有獲授權的紀錄保存會影響決策的證據, 例如:

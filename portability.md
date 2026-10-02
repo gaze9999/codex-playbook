@@ -33,9 +33,15 @@ python scripts/install_global_agents.py
 
 Profile 安裝與啟用是兩件事; CLI 可依 codex-setup 的 [agents 說明](https://github.com/gaze9999/codex-setup/blob/main/agents/README.md) 使用 profile, 其他用戶端則核對支援方式 手動合併設定時保留原有設定, 不直接覆蓋整份 config
 
+### Desktop 設定與可編輯 prompts
+
+[Desktop 設定來源與操作說明](https://github.com/gaze9999/codex-setup/tree/main/desktop) 保存 commit, PR 與 PR watcher 的 Markdown prompt, 以及可攜的 memories / branch-prefix 偏好. 編輯來源後可用 renderer 產生經 TOML 檢查的片段, 再將 prompt 貼入對應 UI 或合併已支援的設定; renderer 不改現有 config, 不搬 secrets 或整份 app state
+
+準備就緒自動合併, 寫作風格與 Custom rules 等 UI 項目另依說明人工核對, 不猜未確認的 config key. 安裝來源不代表 UI 已套用或既有 session 已 reload; 換電腦後逐項確認. 記憶內容與私人權限規則留在個人環境, 不包含於公開 bundle
+
 ## 3. Custom Skills
 
-從 [codex-setup README](https://github.com/gaze9999/codex-setup#安裝與同步) 選擇需要的 Skills, 使用用戶端支援的 repo path 或 release ZIP 安裝方式; 目錄同步只限此來源管理的 Skill
+從 [codex-setup README](https://github.com/gaze9999/codex-setup#安裝與同步) 選擇需要的 Skills, 使用用戶端支援的 repo path 或 release 組合包安裝方式; 新版 Skills 只發布 all-skills 組合包, 包內各 Skill 仍有獨立目錄, 可選取所需項目. 目錄同步只限此來源管理的 Skill, MCP wheel 與安裝 bundle 另依其用途發布
 
 來源清單會變動, 不將安裝數量固定為成功條件 比對實際目錄與各 Skill metadata, 不覆寫 `.system`, plugin 或其他來源的 Skill
 
@@ -59,7 +65,9 @@ python scripts/audit_skills.py
 
 Authentication 與秘密資料依該環境的正式方式設定, 不放在 repository, prompt 或公開 log; 保留本機既有配置與外部服務選擇
 
-Git author identity 留在自己的 local / global Git config; 範例不帶個人 email, 也不將某台機器的 identity 複製到公用設定 核對 repository 所需 convention 後, 再依自己的公開署名偏好設定
+Git author / committer identity 留在自己的 Git config; 個人與公司工作可依 repo local config 或實際工作區的 conditional include 分流, 換電腦重新核對路徑與有效設定. 個人 GitHub noreply email 從自己的帳號設定確認, 不把公司 email 或別人的署名複製到公開範例
+
+發布前先建立適合專案的 gitignore, 核對待提交內容與 author / committer. 身分設定只影響後續提交, 不會自動改寫歷史; 若明確授權歷史改寫, 先備份, 核對協作者與 refs, 以已知遠端值保護推送, 再核對 tags / releases / attribution. 不因更換身分擴張到其他 repo 的歷史
 
 ## 5. Project preflight
 
