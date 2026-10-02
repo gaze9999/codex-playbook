@@ -29,7 +29,8 @@
 | 核對研究來源與採用理由 | [research.md](research.md) |
 | 決定何時需要有限的語意評估 | [jev.md](jev.md) |
 | 持續拓展知識並評估新技術 | [knowledge-radar.md](knowledge-radar.md) |
-| 執行独立安全檢查並保留證據 | [red-team.md](red-team.md) |
+| 執行獨立安全檢查並保留證據 | [red-team.md](red-team.md) |
+| 判斷新增 Skill 或抽出通用 Python 工具 | [toolkit-roadmap.md](toolkit-roadmap.md) |
 | 讓 agent 維護這份文件 | [AGENTS.md](AGENTS.md) |
 
 建議先讀 workflow, 再依目前問題選讀其餘文件; 不必每次任務都把整份 playbook 放入 context
