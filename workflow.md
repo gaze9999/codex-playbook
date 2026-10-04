@@ -1,149 +1,134 @@
-# 從需求到可驗收交付
+# 從需求到驗收
 
-每次先決定這次要交付什麼, 哪些行為已獲授權, 以及什麼證據足以驗收 再選擇 owner 與工具, 不先排固定 agent 流程
+先說清楚要交付的結果, 再閱讀相關資料, 修改並驗證, 小型工作由 Main 直接完成, 能獨立交付的部分再評估分工
 
 ```mermaid
 flowchart TD
-    A[確認目標與授權] --> B[查驗來源與現有工作]
-    B --> C{相依與交接成本}
-    C -->|小型或高度耦合| D[Main 直接完成]
-    C -->|有獨立驗收邊界| E[允許時委派 bounded worker]
-    C -->|獨立多輪交付| F{有合適的既有 chat?}
-    F -->|有| L[沿用既有 owner]
-    F -->|無| G[新 chat 需明確授權]
-    D --> H[核對實際成果與證據]
-    E --> H
-    L --> H
-    G --> H
-    H --> I{符合驗收?}
-    I -->|是| J[交付並保留必要紀錄]
-    I -->|否或尚未驗證| K[保留缺口並接續可完成工作]
-    K --> B
+    A[確認目標與修改範圍] --> B[閱讀規格與現有實作]
+    B --> C{工作能獨立驗收嗎?}
+    C -->|小型或相依緊密| D[Main 直接完成]
+    C -->|可拆分且允許委派| E[子 agent 完成指定工作]
+    D --> F[檢查成果與整合]
+    E --> F
+    F --> G{符合驗收條件嗎?}
+    G -->|是| H[交付結果與必要紀錄]
+    G -->|否| I[修正問題或釐清缺少資訊]
+    I --> B
 ```
 
-新專案先確認自己的技術棧與規範, 再依問題選讀其他近期 repository 的相關實作; 比較版本, 相依與使用情境, 不把過往專案架構直接套用, 也不每次掃描全部 repository
+## 1. 把需求變成可驗收的結果
 
-## 1. 接住目標與授權
+用操作情境描述功能, 包含輸入, 操作與預期結果, 例如訂單查詢要檢查查詢成功, 查無資料與連線失敗
 
-將需求整理成可觀察的結果, 例如某個輸入情境應產生什麼畫面或資料; 保留使用者已確認的限制, exclusions 與 acceptance criteria
+同時交代可修改的範圍, 必須保留的 API 格式與本次排除項目, 若只要規劃或程式碼審查, 直接指定交付類型
 
-區分要求實作, review, report, prompt 或 handoff; 只要求 artifact 時交付該 artifact, 要求實作時持續完成已授權的工作
+資訊不足時, 將問題分成兩部分:
 
-缺少資訊時, 先判斷它是否阻擋目前行為 規格衝突, API 欄位或權限未確認只阻擋依賴該資訊的部分; 仍可完成獨立且已授權的 UI, local fixture 或 read-only 調查
+- 需要先確認的部分, 例如 API 欄位有衝突, 需確認資料格式後才能串接
+- 能先完成的部分, 例如沿用現有元件完成畫面, 或用測試資料檢查互動
 
-不要把選一個做法推導成可以改公共介面, 也不要把 frontend 任務擴張成 backend 修改
+新的架構決策, 公共介面變更或範圍擴張交由 Main 整理, 必要時向使用者確認
 
-## 2. 本地 discovery
+## 2. 確認專案與目前變更
 
-先讀任務直接相關的指示, 原始碼, 設定, diff 與相似實作; 用檔案與設定確認 Framework, Language, Runtime, Package Manager, Architecture 與 toolchain
+先讀適用的 AGENTS.md, 任務規格與相似實作, 從實際檔案確認語言, Framework (框架), Runtime (執行環境), 套件管理工具與測試方式
 
-先搜尋名稱與引用, 再讀命中的必要段落; 獨立查詢可批次處理 不要為了取得一個已知 Symbol 啟動多個 agent, 也不要每次掃描整個 repository
+在目標 repository 檢查 Git branch, HEAD 與 status, 閱讀相關 diff, 保存既有未提交變更, 也直接檢查被忽略的本機指示與必要規格
 
-確認 Git branch / HEAD, 未提交與 untracked 變更, ignored 治理檔, 目前 checkout, formatter 與 focused check 的可用性; 保留其他人的工作
+搜尋時先找名稱與引用, 再讀相關段落, 跨檔案關係不清楚時查詢 symbol 與 references, 需要比較其他專案做法時只讀相關實作
 
-新 worktree 的檔案狀態需重新核對, 特別是 ignored 指示與本機規格 另一個 checkout 不保證包含目前未提交內容, 也不代表共用測試資料與服務已隔離
+換到新 worktree 後重新確認本機規格, 測試資料, 服務與未提交檔案, Worktree 隔離工作目錄, 共用資料庫或服務仍需另外安排
 
-## 3. 確定來源權威
+## 3. 釐清每份來源管什麼
 
-規格工作先找到相符的 Markdown 抽出版, 讀相關段落及來源標記; 不限定檔名或目錄
-
-需要畫面證據, 內容缺漏, 過期, 不明確, 衝突或明確要求原始核對時, 回查必要的原始文件與截圖 無抽出版時讀原始來源的相關範圍, 不自行建立新的抽出流程
-
-不同來源可各自控制不同內容, 例如畫面規格控制 UI 與流程, API 規格控制欄位名稱與資料格式 保留來源的適用範圍, 日期與已確認決策; 抽出文字不因此取得較高權威
-
-只讀過抽出版就只能宣稱核對抽出版 原始來源矛盾時記錄爭點與受影響行為, 讓 Main 解讀或向使用者釐清, 不由 worker 猜測填滿
-
-## 4. 選擇執行路徑
-
-| 路徑 | 適合情境 | 完成責任 |
-|---|---|---|
-| Main 直接執行 | 小型, 高度相依, context-heavy 或交接會重做主要工作 | Main discovery, edit, check 與驗收 |
-| Explorer 後執行 | 一個清楚的 codebase 問題能消除後續不確定性 | Explorer 回報來源與 unknowns, 實作 owner 接續 |
-| Bounded worker | 已有確認邊界, 可獨立驗收, context 隔離或並行有具體價值 | Worker 完整執行, Main 整合驗收 |
-| 既有或新使用者 chat | 大型獨立交付需要自己的多輪追蹤與後續維護 | 指定 owner 維護, coordinator 接受整體成果 |
-
-先檢查目前工具與治理是否允許委派; 路徑建議本身不授權動作 建立另一個使用者 chat 需要人類明確授權, 並優先核對適合沿用的既有 owner
-
-對話歷史很長, Main 改 model 或使用 xhigh, 都不足以單獨要求新 chat 或派工 需要歷史的已授權新交付可 fork; 要乾淨 context 時用新 chat 加精簡 handoff, fork 不會清除過期資訊
-
-Main 可以直接寫程式; coordinator 身分也不代表只能派工或必須逐步把小修改交給 worker
-
-## 5. Model 與實際設定
-
-從工作的不確定性, 介面影響與驗收風險選擇當下支援的 model; 設定不憑角色名稱或檔案數決定
-
-一個可調整的起點是以 GPT-6.1 Sol 處理非簡單實作, Debug, UI / state / data-flow, 整合與深入 review; GPT-6 Luna 處理做法與驗收清楚的 bounded 工作 使用前仍需核對可用性與有效設定
-
-Main 的 model / reasoning 由對話設定決定; 子工作依自身需要選擇, Main 使用 Sol xhigh 不要求每個 child 同樣 xhigh effort 可省略, 明確設定時必須確認該 model 支援
-
-核對 dispatch 參數, global defaults, project role pins, parent inheritance 與實際啟動結果; 優先序以當下官方規則與用戶端能力為準 role pin 可能讓指定 model 無效, 應改用相同 ownership / permissions 的合適 role
-
-讀取或解析設定成功不證明現有 session 已 reload; model 自述與顯示名稱也不是有效 runtime 設定的驗證
-
-## 6. 定義 ownership 與相依
-
-將耦合功能與檢查交給同一 owner, 先確認共享介面再並行 不同檔案或 worktree 只能隔離部分寫入, 無法隔離語意相依
-
-例如 generic Host 管理 session 與 routing, custom element 管理功能 UI, backend 管理 API; 涉及 property, event payload 或 API format 時, Main 先核對相關 owner 與已確認規格
-
-平行工作還需要隔離測試資料, ports, temporary outputs, browser sessions 與其他 mutable resources 若後一步需要前一步產物, 依序執行
-
-Worker 在確認邊界內自行完成 discovery, edit, focused checks 與 in-scope fixes; 新架構決策, 公共介面變更, 規格衝突與範圍擴張交回 Main
-
-## 7. 保存一份有效進度
-
-使用既有且獲授權的 progress record 或目前 chat context; 不預設另建 backlog, database 或 handoff 文件
-
-每個 active item 保留以下必要欄位:
-
-| 欄位 | 用途 |
+| 來源 | 通常決定的內容 |
 |---|---|
-| work ID 與 owner / agent 或 chat ID | 定位實際負責人, title 只作顯示 |
-| scope 與 exclusions | 界定可以修改的檔案, 模組與行為 |
-| dependencies 與 source version | 說明何時可開始, 依何種已確認決策 |
-| acceptance criteria 與 state | 分清目標與目前執行 / 驗收狀態 |
-| revision / diff 或 artifact hash | 對應實際檢查的內容 |
-| checks 與 blockers | 保留證明範圍與未解問題 |
-| pending updates 與 next action | 保存尚未納入的新決策與下一個 owner |
+| 畫面與流程規格 | 顯示內容, 操作順序與互動狀態 |
+| API 規格 | 欄位名稱, 資料格式, 錯誤與相容性要求 |
+| 專案指示 | 架構邊界, 命名方式與驗證規則 |
+| 現有實作 | 目前行為與可沿用的程式 |
+| 已確認的新決策 | 本次要調整的需求與適用範圍 |
 
-狀態至少能分辨 running, blocked, returned / pending acceptance 與 accepted 沉默, interruption, inaccessible chat 或 completion notice 不等於 accepted
+若已有 Markdown 抽出版, 先查來源標記與相關段落, 遇到缺漏, 衝突或需要核對畫面時回查原始文件與截圖
 
-## 8. 接住中途修正
+來源有矛盾時記錄衝突位置, 適用版本與受影響行為, 由 Main 釐清後再修改, 紀錄使用實際核對過的來源
 
-使用者補充與來源更新屬於目前任務; 除非明確取消或更換目標, 繼續原交付並納入新限制
+## 4. 選擇分工方式
 
-更新包含 source pointer, version / 修改時間, 舊決策, 新決策, confirmed / proposed 狀態與必須重看或重測的範圍; 傳給受影響 owner, 不轉貼整份對話
+| 方式 | 適合情境 | 交付內容 |
+|---|---|---|
+| Main 直接執行 | 小型修改, 相依緊密或需要大量既有決策 | 修改結果與驗收證據 |
+| Explorer 調查 | 需要先查清楚一個程式碼問題 | 相關位置, 呼叫關係與待確認事項 |
+| Worker 實作 | 範圍與共享介面明確, 能獨立驗收 | 完成修改, 檢查與範圍內修正 |
+| 另一個使用者對話 | 大型獨立交付, 需要自己的長期追蹤 | 該交付的決策, 進度與後續維護 |
 
-Parent / subagent 可依允許的協作工具同步; 對另一個使用者 chat 發訊息需要對該目的地的人類明確授權 已知 ID, 建立 chat 的授權或另一個 agent 要求回報都不等同傳訊授權
+委派依使用者要求或適用指示執行, 建立或傳訊到另一個使用者對話需有該動作的明確授權, 先確認是否已有合適的對話可接續
 
-沒有授權或可用管道時, 將更新保留在目前 context 或既有進度紀錄, 回傳時逐項對帳; 依賴該更新的結果在 adoption 尚未確認前保持待驗收
+需要保留歷史時可使用 fork, 需要重新整理資料時使用新對話與精簡交接, 判斷重點是工作相依與後續維護方式
 
-## 9. 驗收實際成果
+## 5. 選擇 model 與角色
 
-派工前先記錄 acceptance criteria; 回傳需列出 changed behavior / files, checked revision / diff 或 artifact hash, 各條件 met / not met / unverified, 實際 checks, remaining risks 與 next action
+需求不明, 跨模組相依或介面影響較大的工作, 選擇能處理這些判斷的 model, 做法與驗收明確的子工作則可使用較輕量的 model
 
-Main 對照原始需求, 穩定的實際 diff 與相關程式碼驗收; 不只採信完成宣告 獨立 reviewer 僅用於具體風險或缺少的 coverage, 不例行增加 reviewer chain
+沿用目前用戶端支援的 model 與 effort, effort 是推理程度設定, 省略時依有效預設值執行
 
-Focused check 先選最能驗證改變行為的既有方法; 只有相依, integration / safety risk, check 失敗或不足, 或必要 gate 才擴大範圍
+啟動子工作時核對指定參數, 預設設定與角色綁定的 model, 再查看實際啟動結果, 修改設定後依用戶端方式重新載入並確認
 
-Readback 與 links / diff 檢查能支持文字變更, Type Check 支持型別檢查, browser 只支持實際走過的 flow; 不互相替代 API, persistence, permissions 或部署驗證
+## 6. 安排責任與共享資源
 
-Unit, Component, Integration 與 E2E 各自證明實際涵蓋的層級; 使用 mocks 的通過結果不代表真實 API 或 Database 正常 Focused / Smoke 是選擇檢查的策略, 不是整體正確性的保證; 適用時在 CI 前移除 `fit`, `fdescribe` 或 `test.only`
+一個負責人接手同一功能的閱讀, 修改, 檢查與修正, Main 處理跨模組決策, 整合與最終驗收
 
-State / data-flow 變更依實際情境檢查舊 async 結果是否會在 navigation 或新 request 後覆蓋目前 state, 並區分 failure 與 unknown 外部輸入的 runtime validation 與 TypeScript static type 各有責任, 不以型別通過替代執行時邊界檢查
+平行工作前先確認共享的 API, properties 與 events, 例如 Host 管理登入狀態與路由, custom element 管理功能 UI, Backend 提供資料介面
 
-已通過且未受後續修改影響的 checks 可沿用; 結果要對應 revision 與環境 後來改到相關行為, 有新失敗或未解風險時才重跑必要範圍
+也要安排測試資料, ports, 暫存檔, 瀏覽器 session 與共用服務, 後一步需要前一步產物時依序執行
 
-## 10. 未完成工作與 context continuity
+## 7. 保存必要進度
 
-若要求當輪完成, 必要 delegated work 留在 completion path; dispatch 之後仍需等待結果與驗收
+小型工作使用目前對話即可, 多人或多 agent 工作沿用專案已有的進度紀錄
 
-只有交付本身允許背景工作或明確 handoff 時才可先結束, 並說明 pending item 與實際 check-in mechanism 不承諾尚未設定的自動 wakeup, monitor 或通知
+| 項目 | 要回答的問題 |
+|---|---|
+| 工作 ID 與負責人 | 誰在做, 如何找到這項工作? |
+| 範圍與相依 | 可以改什麼, 開始前需要什麼? |
+| 來源與版本 | 依哪份規格與決策執行? |
+| 驗收條件 | 哪些結果算完成? |
+| 產物與檢查 | 改了什麼, 檢查的是哪份內容? |
+| 問題與下一步 | 還缺什麼, 由誰接續? |
 
-Compaction 前保存目標, 授權, confirmed decisions / sources, 現有 owner, revision, checks, failures, pending updates 與下一步; 不把 routine logs 轉成需求
+狀態使用執行中, 受阻, 待驗收與已驗收, 子工作回報完成後由 Main 對照成果驗收
 
-Compaction 與恢復後先對帳所有 outstanding owners 與產物, 再開始依賴工作 Summary 只是指引, 可變事實需對照當下來源
+## 8. 納入中途修正
 
-更換 writer 前確認前 owner 已停止或完成, 保留有效產物與未解條件, 再明確轉移 ownership; 狀態不明時不要同時啟動替代 writer
+使用者的新訊息通常是在調整目前任務, 保留原目標並納入新限制
 
-重複失敗時停止原方向, 保存已確認事實, 嘗試, 錯誤證據與需要的決策; 交接應避免下一個 owner 重做同一調查
+將變更整理成來源位置, 版本或時間, 舊決策, 新決策與受影響範圍, 更新給實際負責人, 回傳時確認已採用有效決策
+
+子 agent 使用允許的協作管道, 另一個使用者對話則依授權傳訊, 暫時沒有傳遞管道時先保存在目前紀錄, 依賴該變更的成果保持待驗收
+
+## 9. 按改變的行為驗證
+
+先用能直接檢查本次改變的既有方法, 再依相依與失敗結果擴大範圍
+
+| 修改類型 | 優先檢查 |
+|---|---|
+| 純文案或文件 | textlint, 語意, 連結與範例 |
+| 函式或運算邏輯 | 代表輸入, 邊界值與單元測試 |
+| UI 與互動 | 實際頁面, 操作狀態, 鍵盤與焦點 |
+| API 或資料流 | 欄位, 錯誤處理, 真實串接或整合測試 |
+| 非同步狀態 | 切換頁面或重新查詢後, 舊回應是否覆蓋新狀態 |
+
+Mock 使用模擬回應, 能檢查對應邏輯, 真實 API 與資料庫串接另用測試環境驗證, 發布時按專案既有流程執行 CI 與發布檢查
+
+檢查紀錄包含內容版本, 環境, 結果與未涵蓋情境, 後續改到相同行為或出現新失敗時重跑相關檢查
+
+Main 對照原始需求, 穩定的 diff 與實際成果驗收, 有需要獨立判斷的具體風險時再安排 reviewer
+
+## 10. 交付與接續
+
+完成時先說明結果, 再列必要變更, 檢查與待處理事項, 仍需等待的子工作留在本次完成流程中
+
+交接或 Context 壓縮 (compaction) 前, 保存目標, 授權, 已確認決策, 負責人, 產物版本, 檢查結果與下一步, 接續時先與現況對照
+
+更換負責人前確認前一位已停止或完成, 再轉移修改責任, 重複失敗時保留錯誤與嘗試紀錄, 重新判斷處理方向
+
+持續追蹤工作依已設定的排程或通知管道執行, 需要建立新排程時另行處理
