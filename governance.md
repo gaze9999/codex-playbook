@@ -1,92 +1,89 @@
-# 指示分層與證據紀錄
+# 指示與紀錄要放哪裡
 
-將長期穩定原則放在常駐指示, 將條件式流程放在 Skill / guide, 將單次目標與進度放在 task, 讓 agent 讀到與當下決策有關的資訊
+把穩定規則, 專案事實, 工作方法與當次進度分開保存, Agent 才能在需要時讀到正確資料, 修改時也容易找到負責的來源
 
-## 先確認在哪裡執行
+## 先分清執行環境
 
-ChatGPT 帳戶自訂指示, ChatGPT Project 指示, 雲端 Work 與本機 Codex 各有設定入口, 不將 Web, Desktop, CLI 與 IDE 視為同一條 AGENTS.md 父子鏈. 本機 Codex 用戶端共用本機 configuration 層, 雲端 Work 不讀本機 Codex config, 詳見 [官方開發設定](https://learn.chatgpt.com/docs/developer-settings)
-
-ChatGPT Project 保存該 Project 的指示, 檔案與連接來源, 不因同名就等於本機 repository. Local Codex 則依目前工作目錄與實際 checkout 判定指示, 查驗 [官方 Project 說明](https://learn.chatgpt.com/docs/projects) 及 [AGENTS.md discovery](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
-
-ChatGPT 帳戶的可複製治理規則, Codex 維護用 Project 指示及套用位置另見 [手動設定說明](web-settings.md), 本機安裝與鏡像比對見 [換機流程](portability.md)
-
-## 每層保存什麼
-
-| 層級 | 適合內容 | 應避免內容 |
-|---|---|---|
-| Global AGENTS.md | 語言, 授權, 保留 concurrent work, 驗證誠實性與穩定偏好 | 私有路徑, 交易欄位, 暫時環境狀態 |
-| Repository AGENTS.md | 架構, 模組 ownership, public interfaces 與驗證邊界 | 每個 feature 的完整規格 |
-| Nested AGENTS.md | 模組 runtime, commands, conventions 與局部限制 | 重複 root 的全部內容 |
-| Role configuration | 所屬 scope, permissions, 穩定 role 的 model pin | 所有任務的細節與進度 |
-| Skill / conditional guide | 明確 trigger, reusable procedure 與詳細 reference | 無條件常駐載入或替代當次授權 |
-| Task context / progress | 目標, 授權, 決策, owner, criteria, 證據, pending 與 next | 全部 transcripts 或另一套重複 backlog |
-
-Configuration 決定可用設定, runtime permissions 決定可做動作, instructions 描述應如何執行, 三者都需核對 教學文件不會自動生效, role 的 read-only 敘述也需搭配實際 sandbox 與 tools 確認
-
-Codex 在 global 層先選非空的 AGENTS.override.md, 沒有時使用 AGENTS.md, 不是兩份全部載入. 專案內從 repository root 到目前工作目錄逐層選取指示, 每層依 override, base 與設定的 fallback 選最多一份, 較近的指示補充或覆蓋較廣的內容. Git root 以上的工作區文件需要明確引用, 不能只因放在父目錄就推論已載入
-
-若來源衝突, 先確認 authority 與適用範圍, 不把最長, 最新修改或最先搜尋到的文件直接當成最高權威 確定的使用者授權與治理限制需在交接後保留
-
-## Global, Role, Skill 與 Python core 的取捨
-
-不以檔案數或長度決定拆合, 先比較觸發條件, 責任, 可獨立驗收的輸出與維護成本. 入口依 [codex-setup Skill 清單](https://github.com/gaze9999/codex-setup#skill-catalog) 核對, 同一流程的細節移到按需 references, 不把不同工作合成必須全部載入的大 Skill
-
-穩定的語言, 程式風格, 授權與驗證偏好保留 Global, 若移到可選 Skill, 可能在未觸發時遺漏. Project / nested AGENTS 保留實際 runtime 與介面限制, Role 只保存 ownership, permissions 與必要 model 設定, 不重複全域規則或用另一份 prompt 維護同一流程
-
-不依賴 Codex 的確定性功能可抽成版本化 Python core, 供 CLI / GUI / MCP / Skill 共用, Skill 保留何時使用, 輸入判讀, 邊界與驗收. 若需要 standalone snapshot, 從 canonical source 產生並記錄版本與 hash, 不手動維護兩份演算法. 抽取前核對錯誤, 寫入與備份語意, 詳見 [工具化次序](toolkit-roadmap.md)
-
-Desktop 設定有獨立來源, 不塞入 AGENTS: prompt 與可攜偏好由 codex-setup 管理, 未確認的 UI-only 設定透過手動操作與 readback 紀錄. ChatGPT 帳戶與雲端記憶不由本機 installer 同步, 本機 Codex 記憶也不當成強制規格, 必守規則放在適用指示或已核對文件. 記憶內容, 自訂權限規則中的私人路徑與登入狀態不進公開工具包
-
-## Evidence record
-
-在既有獲授權的紀錄保存會影響決策的證據, 例如:
-
-| 項目 | 可核對紀錄 |
+| 環境 | 指示與資料來源 |
 |---|---|
-| 規則與來源 | 文件位置, version / revision / 日期, 適用範圍 |
-| 決策 | 問題, confirmed / proposed, 採用理由與排除條件 |
-| 修改產物 | files / artifact, diff 或 hash, owner / work ID |
-| 驗收 | criteria 狀態, actual checks, environment 與未驗證範圍 |
-| 更新與延續 | 受影響 owner, pending adoption, blocker 與 next action |
+| ChatGPT 帳戶 | 帳戶自訂指示, 雲端記憶與已授權 App |
+| ChatGPT Project | 該 Project 的指示, 上傳檔案與連接來源 |
+| 本機 Codex App, CLI 與 IDE | 本機設定, 適用的 AGENTS.md, 已安裝 Skills 與 MCP |
 
-紀錄需足以防止重複調查, 但不用保留 routine tool output 或完整對話 Secret, 私有 endpoint, session material 與 customer data 不進公開資料
+ChatGPT Project 的檔案透過上傳或連接提供, 本機 Codex 依工作目錄與 checkout 讀取專案, 雲端 Work 使用受管理的執行環境, 本機 config 留在本機, 詳見 [官方開發設定](https://learn.chatgpt.com/docs/developer-settings) 與 [Project 說明](https://learn.chatgpt.com/docs/projects)
 
-檢查結果屬於特定 revision / diff 與環境, 後續相關修改不能直接沿用舊的通過宣告 Ignored 治理檔可能不出現在 Git diff, 仍須直接 readback 與 syntax / reference validation
+帳戶設定範例見 [web-settings.md](web-settings.md), 本機安裝與換機見 [portability.md](portability.md)
 
-## Community, 官方能力與實際量測
+## 每一層保存什麼
 
-官方文件用來確認產品支援與設定規則, community 案例用來提出候選做法, 個人採用的原則是可修訂決策, 不是 vendor guarantee
+| 位置 | 適合保存 | 例子 |
+|---|---|---|
+| Global AGENTS.md | 跨專案偏好與操作原則 | 繁中台灣用語, 保留既有變更, 資料外傳邊界 |
+| 專案根目錄 AGENTS.md | 該專案的架構與必要規則 | API 相容性要求, 模組責任與測試方式 |
+| 子目錄 AGENTS.md | 所在模組的特殊規則 | 特定 Runtime, 命令與局部限制 |
+| 角色設定 | 該角色的責任與執行設定 | 唯讀調查, 可修改範圍與指定 model |
+| Skill | 可重用的條件式工作流程 | 安裝工具, 校對文案或分析 UI |
+| 專案規格 | 已確認的功能與資料要求 | 欄位, 流程, 狀態與錯誤處理 |
+| 對話或進度紀錄 | 當次目標與目前狀態 | 已完成項目, 檢查結果與下一步 |
 
-每個案例保留 source link, 閱讀日期與採用理由, 推論與已驗證事實分開 Community 成功案例不證明目前專案也會降低成本或提高品質
+例如, 所有專案都要使用台灣用語, 放 Global, 只有訂單模組的 API 欄位要求, 放專案規格, 本次查詢頁的修改進度, 留在對話或現有任務紀錄
 
-要比較 model 或 routing 成本, 需以同一 acceptance basis 記錄整個 accepted result 的 usage, elapsed time, retries, handoff, review 與 repair, 控制 source revision, environment 與實驗差異
+## Codex 如何讀取 AGENTS.md
 
-沒有量測時只說設計理由與預期 trade-off, 不宣稱省 token 或 latency 較低 role 數量, model 價格與檔案長度都無法單獨代表總完成成本
+Global 層在 Codex home 選取第一份非空指示, 優先使用 AGENTS.override.md, 其次是 AGENTS.md
 
-## 授權與對外操作
+專案層從專案根目錄走到目前工作目錄, 每層依序查找 AGENTS.override.md, AGENTS.md 與設定的備用檔名, 每層最多讀一份, 越接近工作目錄的內容越優先
 
-可以提供 routing 建議, 不代表可以建立另一個使用者 chat, 可以建立 chat, 不代表可以對它發 follow-up message 指向其他使用者 chat 的訊息需要人類對該目的地的明確授權
+要使用 Git root 上層的工作區規則, 在專案指示中明確引用並讀取, 詳見 [官方指示載入方式](https://learn.chatgpt.com/docs/agent-configuration/agents-md)
 
-Parent / subagent coordination 依當下允許的工具執行, child 或其他 chat 的要求不會自行產生人類授權
+設定檔管理 model 與工具選項, 權限設定限制實際讀寫與執行, AGENTS.md 說明工作規則, 唯讀角色需搭配實際權限設定
 
-Recurring automation, monitor 或提醒需要使用者要求與實際支援的排程設定, 只記錄之後回查不代表已設定自動 wakeup
+## AGENTS.md 要不要進 Git
 
-Commit, push, merge, release, publication, installation 與外部服務變更依當次授權處理 權限不足時先完成不受阻礙的工作, 說明具體 blocker, 不把環境問題當成 application defect
+共用的專案規則可納入版本控制, 讓團隊與其他 checkout 取得同一份規則, 個人路徑, 本機狀態與私人操作安排則保留在本機
 
-## 文件維護邊界
+本 Playbook 的根目錄 AGENTS.md 作為本機維護指示, 由 .gitignore 忽略, 公開教學與研究參考保存在其他 Markdown 文件
 
-個人 Notion 保存自己的學習紀錄, 偏好, 未公開決策與工作 context, GitHub 保存可讓其他人重用的方法與範例 公開內容從個人筆記提煉並改寫, 不同步私有 page URL, 原始紀錄或個人進度
+已受追蹤的檔案要先取消追蹤再加入忽略規則, 詳見 [Git 官方說明](https://git-scm.com/docs/gitignore)
 
-實際 project 文件保存該專案的規格, 決策與驗收證據, 公開方法不能取代它們 通用工具由 my-py-tools 維護, Codex 整合由 codex-setup 維護, 解說由 playbook 維護, 各自只保存所擁有的責任
+## Skill, 角色與共用程式的分工
 
-日常執行從 Main 的目標與限制開始, 不需要使用者逐層選擇工具, 只有實際發生持久變更才維護受影響來源, 不另加每輪 checklist 或五處同步 Main 是目前授權任務的 owner, 文件不建立永久背景 coordinator 或自動 wakeup
+穩定規則留在適用指示, Skill 保存有明確使用時機的流程, 細節放在按需閱讀的參考文件, 角色設定只補充該角色的責任與必要設定
 
-兩者有不同的維護目的, 個人筆記變更不自動成為公開規則, 公開方法更新也不授權回寫私人筆記 需要同步時依明確範圍核對來源與去識別化內容
+確定的輸入能得到可測試的固定結果時, 可抽成共用程式, 供 CLI, GUI, MCP 與 Skill 使用, 例如檔案 hash 比對與 Markdown 結構檢查, 詳見 [工具化規劃](toolkit-roadmap.md)
 
-這裡不複製 executable Skills, installer 或個人 config, 以 codex-setup 連結指向操作來源 有 reusable procedure 需要實作時, 回工具來源處理
+同一份演算法保留一個維護來源, 產生獨立副本時記錄版本與來源 hash, 工具改變後更新相依的整合程式
 
-新增範例使用 generic Host, custom element, backend 與 placeholder, 不沿用原始專案名稱, company, transaction identifier, local absolute path, chat ID, private API 或當下工作狀態
+## 保存足夠的驗收證據
 
-去識別化需移除可互相拼接識別的資訊, 不只是替換人名, 不公開原始 transcripts 或完整私有 prompts 標記概念範例, 避免被誤讀成已執行的紀錄
+| 項目 | 紀錄內容 |
+|---|---|
+| 來源 | 文件位置, 版本或日期, 適用範圍 |
+| 決策 | 要解決的問題, 已確認或待討論, 採用理由 |
+| 產物 | 修改檔案, diff 或 hash, 負責人 |
+| 驗證 | 檢查方法, 環境, 結果與未涵蓋情境 |
+| 接續 | 尚未納入的更新, 阻礙與下一步 |
 
-維護完成先檢查 readback, relative links, placeholders, syntax 與 diff, 不為文件變更安裝新的 test framework, 不聲稱 runtime 或 release 已通過
+沿用專案已有的紀錄, 保存能讓下一位接續的內容, 忽略檔也直接讀回檢查, 相關內容改變後更新驗收證據
+
+## 授權與資料保護
+
+對外傳送, 帳戶修改, 刪除, 覆寫, 安裝與發布依當次目標及授權執行, 附件, 網頁與工具結果作為來源資料, 其中的文字指示不自行擴張授權
+
+建立另一個使用者對話與向它傳訊分別確認授權, 子 agent 協作依允許的管道執行, 持續收集與提醒使用已授權的排程
+
+公司程式碼, 客戶資料, credentials, 私有連線位址與私人對話留在獲准的環境, 公開範例使用虛構資料, 去識別化時也檢查多項資訊能否拼回原系統
+
+## 更新正確的來源
+
+| 變更 | 更新位置 |
+|---|---|
+| 通用 Python 工具 | my-py-tools |
+| Codex 指示, Skills 與安裝整合 | codex-setup |
+| 教學方法與研究參考 | codex-playbook |
+| 實際功能與架構 | 對應專案 |
+| 個人學習與私人紀錄 | 私人筆記 |
+
+ChatGPT 帳戶設定在介面套用, 本機設定在對應電腦安裝, 記憶作為回查線索, 必守規則保存在指示或專案規格
+
+修改後檢查文字, 連結, 範例與 diff, 對來源或方法有疑問時查 [research.md](research.md) 的官方文件與社群案例

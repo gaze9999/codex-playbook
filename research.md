@@ -1,51 +1,76 @@
-# 研究依據與採用理由
+# 研究參考與教學依據
 
-以下公開來源於 2026-10-02 核對; 日期代表文件閱讀時間, 不代表產品能力永遠不變 本文件記錄採用理由, 不宣稱這套流程已有品質, latency 或總成本 benchmark
+這份文件保留原始來源, 採用理由與適用範圍, 可用來準備教學, 比較工作方法或追查一項決策
 
-## 官方能力與方法
+第一節的官方文件, Jev 來源與兩篇標示回查的實務文章於 2026-10-05 閱讀, 日期代表查閱時間, 延伸閱讀保留先前的 2026-10-02 紀錄
 
-| 來源 | 文件支持的範圍 | 此 playbook 的採用與限制 |
+## 官方能力與採用理由
+
+| 來源 | 支持的內容 | 教學中的用法 |
 |---|---|---|
-| [OpenAI AGENTS.md discovery](https://learn.chatgpt.com/docs/agent-configuration/agents-md) | Global 與 project 指示形成分層來源, 較接近工作目錄的指示可覆蓋較上層內容 | 將穩定偏好與 project 事實分開; 查驗目前 checkout 的有效指示, 不把 clone 當成 global 已安裝 |
-| [OpenAI Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents) | 獨立工作可委派, 主對話收集結果; 寫入並行需要留意衝突與協調成本, model / effort 有設定與繼承規則 | 先看相依與 ownership, 不以 Main 的 model 決定 agent 數量; 有效設定仍需依當下 client 與 role 查驗 |
-| [OpenAI Skills 與 prompt 指引](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra) | Skill trigger 應明確, 詳細程序按條件載入; 常駐指示與過度細分步驟需要重新評估 | 常駐規則保持短, task 只保留本次目標與必要邊界; 此文章針對特定 model, 不推論所有 model 行為相同 |
-| [Microsoft Test Impact Analysis](https://learn.microsoft.com/en-us/azure/devops/pipelines/test/test-impact-analysis?view=azure-devops) | 依修改相依選擇測試子集, 不能可靠判斷的情況需要較廣 fallback | 採用最小足夠且能檢驗改變行為的 checks; 不假設目前專案可直接使用該工具, 不取代必要 CI / release gate |
+| [OpenAI AGENTS.md](https://learn.chatgpt.com/docs/agent-configuration/agents-md) | Global 與專案指示的查找順序, override 與工作目錄分層 | 用圖或目錄例子解釋規則放哪裡, 操作時確認實際載入來源 |
+| [OpenAI 個人化設定](https://learn.chatgpt.com/docs/personalize) | 自訂指示, Work 網頁寫作風格與記憶設定 | 將帳戶偏好與本機規則分開操作 |
+| [OpenAI Developer settings](https://learn.chatgpt.com/docs/developer-settings) | 本機用戶端的設定與 MCP 連接, 雲端 Work 的設定來源 | 安裝本機工具後另確認目標用戶端, 帳戶連接在其介面授權 |
+| [OpenAI Memories](https://learn.chatgpt.com/docs/customization/memories) | 雲端與本機記憶的不同來源與管理方式 | 必守規則保存在指示, 記憶用來回查 |
+| [OpenAI Projects](https://learn.chatgpt.com/docs/projects) | Project 的指示, 檔案與來源, 本機工作目錄的使用方式 | 新人先分清 ChatGPT Project 與本機專案 |
+| [OpenAI Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents) | 子工作分工, 結果彙整與平行寫入的協調 | 先教單 agent 完成流程, 再練習可獨立驗收的分工 |
+| [Microsoft Test Impact Analysis](https://learn.microsoft.com/en-us/azure/devops/pipelines/test/test-impact-analysis?view=azure-devops) | 依程式碼與測試的相依關係選擇受影響測試 | 用來說明按變更選測試, 該工具的支援範圍另依文件核對 |
+| [Git gitignore](https://git-scm.com/docs/gitignore) | 忽略未追蹤檔案, 已追蹤檔需先從 index 移除 | 說明本機治理檔, 備份與公開文件如何分開管理 |
+| [textlint MCP](https://textlint.org/docs/mcp/) | 使用已設定的規則檢查文字或檔案 | 先準備詞表與標點規則, 修正後再跑檢查 |
 
-上述文件支持分層, bounded 工作與依相依選擇驗證的方向; 明確人類授權, 個人文件同步邊界與 returned / accepted 狀態是本 playbook 採用的治理規則, 不包裝成所有產品的固定要求
+Test Impact Analysis 的文件列有 Visual Studio Test 與 .NET Framework 等支援條件, 教學採用的是依相依選擇測試的方法, 前端或其他語言使用各專案的測試工具
 
-## 如何使用 community 經驗
+## 人類實務討論
 
-本次也參考下列社群與作者來源作為候選方法, 不將單篇討論視為共識:
+官方文件用來確認產品行為, 作者與社群案例用來觀察實際做法, 下表標明此次回查與先前閱讀紀錄
 
-| 來源 | 採用方式與限制 |
+| 來源 | 查閱紀錄 | 可帶入教學的問題 |
+|---|---|---|
+| [r/codex: How I set up Codex subagents without overusing them](https://www.reddit.com/r/codex/comments/1ujjcxh/how_i_set_up_codex_subagents_without_overusing/) | 2026-10-05 回查, 個人使用自述 | 子工作怎麼定範圍, 為什麼小工作直接做, 如何在穩定的版本上審查 |
+| [Peter Steinberger: Shipping at Inference-Speed](https://steipete.me/posts/2025/shipping-at-inference-speed) | 2026-10-05 回查, 作者工作經驗 | 如何用短需求與畫面反覆調整, 將重要功能知識保存在專案文件 |
+| [r/codex: 實際部署 subagent](https://www.reddit.com/r/codex/comments/1ujov69/how_do_you_actually_deploy_subagents_in_codex/) | 2026-10-02 閱讀紀錄 | 探討分工的使用情境與交接成本 |
+| [r/ClaudeCode: Where do subagents pay off](https://www.reddit.com/r/ClaudeCode/comments/1ur70w0/where_do_subagents_actually_pay_off_in_typical/) | 2026-10-02 閱讀紀錄 | 比較閱讀隔離與跨工作協調 |
+| [r/ClaudeCode: To subagent or not](https://www.reddit.com/r/ClaudeCode/comments/1sr9c7k/to_subagent_or_not_to_subagent/) | 2026-10-02 閱讀紀錄 | 哪些工作值得拆分, 哪些直接完成 |
+| [r/ClaudeAI: Subagents and speed](https://www.reddit.com/r/ClaudeAI/comments/1u71d27/subagents_in_claude_code_arent_a_speed_trick/) | 2026-10-02 閱讀紀錄 | 分開評估速度與 Context 隔離的價值 |
+| [obra/superpowers](https://github.com/obra/superpowers) | 2026-10-02 閱讀紀錄 | 觀察子任務與審查的流程設計 |
+| [OpenAI Skills 與 prompt 指引](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra) | 2026-10-02 閱讀紀錄, 特定 model 的官方建議 | 檢視 Skill 的使用時機與常駐指示長度 |
+
+社群貼文中的 model, effort 與設定屬於作者當時環境, 教學使用其工作問題與分工方法, 實作時回到官方文件及目前專案確認
+
+## Jev 的資料來源
+
+| 來源 | 支持的內容 | 採用方式 |
+|---|---|---|
+| [TypeSafe Models](https://docs.typesafe.ai/models) | model alias, 實際 model ID 與語言支援 | 保存回應版本, 繁中與混合語言用代表案例評估 |
+| [TypeSafe Confidence](https://docs.typesafe.ai/confidence) | Choice / Score 的 confidence 與 Noul 機率 | 理解回應欄位, 再用自己的案例校準門檻 |
+| [Jev 1.13 已知失敗情境](https://docs.typesafe.ai/model-jaggedness/jev-1.13) | 數值, 日期, 無關資料與複雜間接問題的限制 | 本機先整理資料, 精確比較交給程式 |
+
+工作中的使用時機見 [jev.md](jev.md), 設定與 API 操作由 [codex-setup](https://github.com/gaze9999/codex-setup/blob/main/docs/jev-usage.md) 維護
+
+## 想比較改善效果, 要記錄什麼
+
+| 項目 | 記錄方式 |
 |---|---|
-| [r/codex: subagents without overusing](https://www.reddit.com/r/codex/comments/1ujjcxh/how_i_set_up_codex_subagents_without_overusing/) 與 [實際部署討論](https://www.reddit.com/r/codex/comments/1ujov69/how_do_you_actually_deploy_subagents_in_codex/) | 對照 bounded scope 與使用情境, 不從討論推論通用省費比例 |
-| [r/ClaudeCode: where subagents pay off](https://www.reddit.com/r/ClaudeCode/comments/1ur70w0/where_do_subagents_actually_pay_off_in_typical/) 與 [是否使用 subagent](https://www.reddit.com/r/ClaudeCode/comments/1sr9c7k/to_subagent_or_not_to_subagent/) | 比較交接與 context 隔離的取捨; 不把另一產品的功能或設定直接搬到 Codex |
-| [r/ClaudeAI: subagents and speed](https://www.reddit.com/r/ClaudeAI/comments/1u71d27/subagents_in_claude_code_arent_a_speed_trick/) | 提醒速度以外還有隔離價值, 仍需對實際工作量測 |
-| [Peter Steinberger: Shipping at Inference-Speed](https://steipete.me/posts/2025/shipping-at-inference-speed) | 參考作者的直接工作與 context 管理經驗; 不採用未獲授權的自動提交或發布策略 |
-| [obra/superpowers](https://github.com/obra/superpowers) | 參考明確子任務與 review 的設計, 不安裝或強制使用完整 pipeline |
+| 比較基礎 | 同一需求, 來源版本, 環境與驗收條件 |
+| 完整工作量 | 輸入整理, model 與工具用量, 重試, 交接, 審查與修正 |
+| 時間 | 從開始到結果被驗收的總時間 |
+| 品質 | 漏掉的需求, 問題, 未驗證範圍與人工修正 |
+| 適用性 | 代表案例, 反例, 語言與 model 版本 |
 
-X 來源曾嘗試 [Kaxil 的討論](https://x.com/kaxil/status/2037503513350005134) 與 [OpenAI Developers 的說明](https://x.com/OpenAIDevs/status/2033637455136731431), 但讀取受限; 不宣稱已核對其全文, 不用搜尋摘要支持技術結論. 持續追蹤可改查作者的原始文章與 repository, 並保留存取限制
+先說明設計理由, 有比較結果後再說改善幅度, 工具的輸出壓縮率與 API 單價分別記錄, 總成本依完整工作量計算
 
-社群案例可以提出候選 model 組合, prompt 或流程; 採用前回查官方能力, 自己的 source state, permissions 與 acceptance criteria
+## 新人教學建議
 
-個人成功案例, 作者自述與某個 pipeline 的設定不等於社群共識; 不把它們當成目前 client 已 reload, 特定 model 支援 effort 或目前專案測試完整的證據
+1. 用一個小功能練習需求, 閱讀, 修改與驗收
+2. 將共用偏好, 專案規格與當次進度放到正確位置
+3. 安裝一個需要的工具, 完成連接與代表性呼叫
+4. 練習一個有明確介面與完成條件的子工作
+5. 對照單人與分工結果, 討論交接成本與實際收益
 
-本 playbook 採用的是可驗收的 ownership 與必要 context 隔離, 沒有要求固定 planner / executor / reviewer tree 若案例沒有公開可重現的相同任務比較, 只記錄做法與 trade-off, 不引用為省費證明
-
-## 要主張改善, 需要哪些證據
-
-- 固定或記錄 source revision, environment, acceptance basis 與比較方式, 避免比較不同工作
-- 計入完整 accepted result 的 input preparation, model usage, tools, retries, handoff, review, repair 與 elapsed time
-- 記錄 missed requirements, defects, unverified items 與人工修正, 不只比較首次回應速度
-- 使用代表性案例與反例; task, language, rubric 或 model version 改變時重新評估適用性
-
-沒有上述量測時, 可以說明預期的 context 隔離或並行價值, 但不能宣稱低價 model, 較少檔案或多 agent 已降低總完成成本
+每次示範保留來源, 操作與結果, 公開教材使用虛構資料, 學員可依自己的專案替換例子
 
 ## 維護研究紀錄
 
-新增來源記錄連結, 閱讀日期, 支持範圍, 採用決策與限制; 將原始來源, 推論, 已確認決策與實際檢查分開
+新增來源記錄連結, 查閱日期, 支持的內容與採用理由, 將原始資料, 推論及實際驗證分開
 
-來源更新只修改受影響的解說與示例, 不要求每輪研究所有能力; 只有新採用 API, 新 model / effort, 新權限或存在疑義時才核對相關範圍
-
-JEV 的 provider 來源, 校準與使用邊界另見 [jev.md](jev.md); 操作來源見 [codex-setup agents 說明](https://github.com/gaze9999/codex-setup/blob/main/agents/README.md), 安裝與 audit 仍由工具來源維護
+來源或能力改變時更新受影響教學, 未重新閱讀的來源保留原查閱日期, 無法取得原文的候選列為待核對

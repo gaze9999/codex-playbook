@@ -5,6 +5,7 @@
 .codex/
 .agents/
 .local/
+/AGENTS.md
 
 # Generated previews and optional local tool environments
 dist/

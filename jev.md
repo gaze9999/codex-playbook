@@ -1,57 +1,55 @@
-# 何時使用 JEV
+# 何時使用 Jev
 
-Jev 是 TypeSafe 提供的語意評估 model; 在這套流程中只協助已找到候選的閱讀排序或有限分類 Main 仍負責需求, 架構, ownership, 實作與驗收
+Jev 是 TypeSafe 提供的語意評估 model, 適合判斷文字是否符合一項條件, 或安排已找到資料的閱讀順序
 
-操作來源維持於 [codex-setup Jev Skill](https://github.com/gaze9999/codex-setup/blob/main/skills/jev-evaluation/SKILL.md) 與 [操作教學](https://github.com/gaze9999/codex-setup/blob/main/docs/jev-usage.md); 這裡解釋選擇理由, 不複製 client, installer 或完整 API schema
+例如, 已找到多份公開的錯誤處理文件, 想先讀最接近目前問題的段落, 可以讓 Jev 評估相關性, Main 再核對原文與實際需求
 
-## 先本地整理, 再判斷是否有價值
+操作方式見 [Jev Skill](https://github.com/gaze9999/codex-setup/blob/main/skills/jev-evaluation/SKILL.md) 與 [使用教學](https://github.com/gaze9999/codex-setup/blob/main/docs/jev-usage.md)
 
-先用本機搜尋與 deterministic filters 核對 source identity / version, tracked state, dependencies 與必讀要求; 只有剩餘可選材料的語意順序或原子分類仍不清楚時才考慮 Jev
+## 先用本機搜尋整理候選
 
-| 情境 | 合適做法 |
+先確認檔案版本, 來源, 相依與必讀內容, 剩下的可選資料需要語意比較時再使用 Jev
+
+| 要處理的問題 | 適合做法 |
 |---|---|
-| 可選參考段落需要按目前問題安排閱讀順序 | 評估已獲准外傳的精簡候選, 保留全部 source pointers 在本地 |
-| 多個摘要需要按明確且有限 criteria 分類 | 問單一語意條件, 保留 unknown, Main 核對原文與相依 |
-| 檔案版本, ID, hash, counts, 日期或數字可直接比較 | 使用本機程式與確定性檢查 |
-| 規格權威, permissions, API compatibility 或 acceptance 尚未確認 | Main 查驗來源與證據, 不交給分數決定 |
-| 候選少, 順序已定或需要全面 review | 直接讀取與檢查; 不為展示工具而評分 |
+| 多個段落的閱讀順序 | Jev 評估精簡候選的相關性 |
+| 摘要是否符合明確條件 | Jev 用一項條件分類, 保留無法判斷的選項 |
+| 檔案 hash, 日期, 數量或版本比較 | 本機程式直接比較 |
+| API 規格, 操作權限或驗收決策 | Main 查閱來源並確認 |
+| 候選少或閱讀順序已清楚 | 直接閱讀 |
 
-沒有固定候選數量門檻, 不作為每輪 preflight, 不用來重選 Main / subagent / chat 路徑 日常入口仍是 Main, 使用者不必先決定是否使用 JEV
+## 安排可以送出的資料
 
-## 外傳與必讀內容
+Jev 使用遠端服務, Query, 判斷條件與候選文字都會送到 provider, 先確認外傳授權, 公司原始碼, 私有規格與客戶資料依公司規則處理
 
-Jev inference 使用遠端 provider; query, rubric, candidates 與 summaries 都需要符合資料外傳授權 安裝或可呼叫工具不授權上傳公司 source, 私有規格, logs 或 customer data; 去識別化與摘要也不自動產生授權
+必讀指示, 主要規格, 驗收條件與已確認決策保留在 Main, 排序用於安排可選資料的閱讀順序
 
-必讀指示, governing specifications, acceptance criteria, confirmed decisions 與 blockers 保留在 Main; 排序只影響閱讀順序, 不改來源權威或 required verification
+Rank helper 將必讀項目留在本機, 可選候選使用不含來源資訊的 ID, ID 與檔案位置對照保存在本機, 結果保留全部候選
 
-Rank helper 的 required entries 在本地保留, 不送其 text 評分; optional candidates 使用 opaque ID, ID 與檔案 / 行號 / 頁碼對照留在本地 每個 candidate 都保留, 不自動丟棄低分材料
+## 把問題問清楚
 
-## 問題與結果設計
+一次判斷一項條件, 例如這個段落是否說明重試後的錯誤處理, 選項也要包含資料不足或無法判斷
 
-問題只問一個明確的語意條件, instructions 與 criteria 對齊, 選項涵蓋不確定情況; 同一批必要 state 的獨立問題可合併, 不為 batch 放入無關全文
+同一份必要資料可以搭配多個獨立問題, 先去除無關內容, 計數, 日期計算與精確數值比較交給程式, 這與 [TypeSafe 的已知失敗情境](https://docs.typesafe.ai/model-jaggedness/jev-1.13) 建議一致
 
-計數, 算術, 版本比較與 structural invariants 留給程式; 不要求 Jev 生成程式, 解釋或歷史摘要 這符合 provider 對 [Jev 1.13 failure modes](https://docs.typesafe.ai/model-jaggedness/jev-1.13) 的建議, 更換版本時仍需回查
+使用評分門檻前, 先準備有預期答案的正例, 反例與資料不足案例, 檢查繁中及中英混合內容的結果, 官方說明英文是主要訓練語言, 見 [語言支援](https://docs.typesafe.ai/models)
 
-Probability 與 confidence 不同: Choice / Score 的 confidence 反映答案機率分布的集中程度, Noul 沒有獨立 confidence; 它們都不是本專案事實正確率的證明 詳見 [TypeSafe confidence](https://docs.typesafe.ai/confidence)
+## 如何看結果
 
-採用 threshold 前, 用允許外傳且有預期答案的代表案例檢查正例, 反例與 unknown; 繁體中文與混合技術名稱另做驗證 [TypeSafe models](https://docs.typesafe.ai/models) 說明英文效果較佳, 其他語言需以自己的資料評估; alias 也可能指向不同版本, 依實際回應記錄 resolved model
+Choice 選擇分類, Score 評估有順序的等級, 兩者的 confidence 表示答案機率分布有多集中, Noul 回傳是或否的機率, 詳見 [官方 confidence 說明](https://docs.typesafe.ai/confidence)
 
-## 能證明什麼
+Main 仍核對原文, 相依與驗收條件, Model alias 可能隨新版改變, 使用時記錄回應中的實際 model ID
 
-| 觀察 | 證明範圍 |
+| 回傳狀態 | 下一步 |
 |---|---|
-| 已安裝 / 註冊, local status 或離線 checks | 配置或本機通道, 未完成工作候選的遠端語意比較 |
-| rank / evaluate 回傳 ok | 該次比較完成, 不代表 Main 接受或 application checks 通過 |
-| fallback / skipped / dry-run | 依實際狀態未完成遠端比較, 回到既有流程 |
+| 比較成功 | Main 核對排序或分類後採用 |
+| dry-run / skipped | 繼續原本的閱讀流程 |
+| fallback 或錯誤 | 保留候選與未確定項目, Main 直接處理 |
 
-工具 unavailable, missing credential, malformed result 或判斷不可靠時, 保留原候選與 unknown, 由 Main 繼續處理; 不自動建立 reviewer, 新 chat 或額外 retry chain
+實際使用後簡短記錄用途, 結果與採用方式, 回應有 model ID 時一起保存
 
-實際使用後只簡短記錄用途, tool / status 與 Main 採用或 fallback 的方式, 回應有 model 才記錄 model; 不預設每輪 skip report, persistent logs 或監看
+## 判斷是否值得使用
 
-若使用者明確要求本機 metadata 監看, 依操作來源設定; 觀察統計不是 account total, remaining credits 或費用, 啟用記錄也不授權外傳內容
+比較完整工作的輸入整理時間, API 用量, 等待, 核對與修正成本, 保留漏掉的證據與人工處理量
 
-## 成本與採用判斷
-
-Jev 的低 API 單價不能單獨證明整體工作省費; 比較時納入輸入整理, remote usage / latency, Main readback, correction 與 missed evidence
-
-目前文件沒有宣稱 JEV 已改善此流程的總 token, latency 或品質; 測量原則見 [research.md](research.md) 只有實際有用且已授權的 bounded 問題才呼叫, 不因已安裝而增加工作
+本機監看依使用者需求設定, 觀察到的統計用於檢視該來源的活動, 帳戶餘額與費用從服務的帳戶資料核對, 詳細量測方式見 [研究參考](research.md)
