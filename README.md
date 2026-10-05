@@ -47,7 +47,7 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 工具�
 | 你現在要做什麼 | 閱讀入口 |
 |---|---|
 | 完成一個功能或修正問題 | [開發流程](workflow.md) |
-| 複製可直接修改的提示詞 | [提示詞範例](prompts.md) |
+| 複製 coding prompt, 對照預期交付與回報示意 | [提示詞範例](prompts.md) |
 | 換電腦, 安裝 Skills 或連接 MCP | [安裝與換機](portability.md) |
 | 決定規則, 規格與進度要放哪裡 | [指示與紀錄管理](governance.md) |
 | 將對話中的方法整理成可重用教學 | [對話轉教學](governance.md#從對話提煉教學), [提示詞範例](prompts.md#從目前對話整理教學) |
