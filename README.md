@@ -50,6 +50,8 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 工具�
 | 複製可直接修改的提示詞 | [提示詞範例](prompts.md) |
 | 換電腦, 安裝 Skills 或連接 MCP | [安裝與換機](portability.md) |
 | 決定規則, 規格與進度要放哪裡 | [指示與紀錄管理](governance.md) |
+| 將對話中的方法整理成可重用教學 | [對話轉教學](governance.md#從對話提煉教學), [提示詞範例](prompts.md#從目前對話整理教學) |
+| 納入中途更正並恢復未完成工作 | [中途修正](workflow.md#8-納入中途修正), [補充需求範例](prompts.md#中途補充與更正) |
 | 設定 ChatGPT 帳戶或維護用 Project | [帳戶與手動設定](web-settings.md) |
 | 查來源, 理解採用理由或準備教學 | [研究參考](research.md) |
 | 評估資料的閱讀順序或分類 | [Jev 使用時機](jev.md) |
