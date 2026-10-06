@@ -1,6 +1,6 @@
 # Skill 與通用工具怎麼規劃
 
-先找目前缺少的工作能力, 再決定補 Skill, 整合現有工具或抽出共用程式, 可用清單見 [codex-setup](https://github.com/gaze9999/codex-setup#skill-catalog)
+先找目前缺少的工作能力, 再決定補 Skill、整合現有工具或抽出共用程式, 目前流程見 [Skill 清單](https://github.com/gaze9999/codex-setup/blob/main/docs/skills.md), 技術介面與相依由 setup 的 [工具文件](https://github.com/gaze9999/codex-setup/blob/main/docs/tools/selection.md) 維護
 
 ## 先決定放哪裡
 
@@ -16,18 +16,45 @@
 
 獨立產品維持自己的 repository, 共用程式由一個來源維護, 各使用者依版本引用
 
+## 按任務選工具介面
+
+先確認要取得的結果與證據, 沿用目前可用且相容的入口, CLI 提供可重現操作, Skill 說明使用條件與驗收, MCP / connector 依 client 與 server 的能力提供串接, Plugin 的管理依目標用戶端處理
+
+| 需求 | 選擇與核對方式 |
+|---|---|
+| 檔案搜尋、Git、批次處理與專案檢查 | 優先既有 CLI, 核對解析到的執行檔、版本、參數與副作用 |
+| 帳戶服務或 client 原生能力 | 沿用已認證且可呼叫的 MCP / connector, 核對 live schema、帳戶與資料範圍 |
+| Browser UI 重現與驗收 | 已知流程可用具名隔離的 CLI session, 需要特定頁面操作或診斷證據時選符合需求的 browser tools |
+| 文件來源、Markdown 與證據比對 | 明確路徑的單次處理可用 CLI, 反覆受限查詢可用具備 roots / hash 檢查的 MCP |
+| 本機文字校對 | 使用相符語言的 CLI 或已載入工具, 核對自動寫檔與回傳建議的差異 |
+| 遊戲規則與數值模擬 | 使用專案共用規則與既有測試工具, 再依問題補計算、試算表或繪圖能力 |
+
+能回傳 JSON、登入帳戶或保留狀態的 CLI 也可能足以完成工作, 兩種介面都符合需求時, 比較完整任務的完成率、重現與恢復方式、用量、時間及維護成本, 介面選擇保留同一套授權與外傳邊界
+
+候選清單、安裝完成、設定已註冊、目前 session 已載入、帳戶已授權與實際呼叫成功分開核對, 缺少能力只阻擋相依部分, 安裝或擴大 roots 依該動作的授權處理
+
+自訂 Skill 與第三方 Plugin 分別沿用自己的管理來源, setup 的 Plugin 清單顯示本機設定名稱與啟用狀態, 安裝與帳戶連接見 [Plugin 說明](https://github.com/gaze9999/codex-setup/blob/main/docs/plugins.md), 不由 Skill 鏡像同步推論 Plugin 安裝完成
+
 ## 已有的工作流程
 
 | Skill | 使用時機 |
 |---|---|
-| angular-architecture | 依專案版本分析 DI, 狀態生命週期, 路由與模組邊界 |
+| agent-governance / task-routing | 規劃指示分層與角色 / 判斷當次工作分流與交接 |
+| context-brief / task-guide / coding-prompt | 整理指定實作規格 / 維護功能導覽 / 產生單次 coding prompt |
+| angular-development / angular-member-order | 依實際 Angular 版本處理元件、表單與串接 / 安全整理成員順序 |
+| react-development / vue-development | 依實際 Framework、state 與 rendering 邊界開發及驗證 |
 | system-design-analysis | 整理需求, 領域模型, 資料一致性與架構取捨 |
 | research-learning-synthesis | 整合官方資料, 社群與論文, 保存反例與先備概念 |
 | development-tool-setup | 檢查並設定一項選定工具的相依與連接 |
 | multilingual-proofreading | 校對繁中, 英文與日文的用詞, 標點與語意 |
 | ui-ux-design | 從代表流程改善介面, 文案, 響應式與鍵盤操作 |
+| game-balance-simulation | 沿用實際遊戲規則比較策略、進度與隨機獎勵, 保留重播條件 |
+| document-source-matching / validation-evidence-review | 核對文件來源 / 檢視既有驗證證據, 保留版本與涵蓋範圍 |
+| network-filter-rules | 依目標解析器維護阻擋或 rewrite 規則, 檢查誤判 |
 
 提示詞評估可擴充 ai-application-engineering 的參考流程, Coding 交接提示詞由 coding-prompt 處理
+
+先閱讀與交付相符的 Skill 啟用條件, 實作、唯讀審查與只產生 prompt 各依原始授權交付, 例如 coding-prompt 產生 prompt 時不直接執行, doc-updater 依可核對的實作變更更新既有文件
 
 Stable Diffusion / ComfyUI 沿用 comfyui-workflow, Unity 專案沿用 unity-development, 安全檢查使用適用的安全工作流程
 
@@ -44,15 +71,16 @@ Stable Diffusion / ComfyUI 沿用 comfyui-workflow, Unity 專案沿用 unity-dev
 | context-brief | 比較既有文字抽取與 OCR 工具 | 格式, metadata, 相依與失敗處理 |
 | doc-updater | 評估抽出 Git 變更分類與安全寫入 | 整檔或章節更新, 備份與衝突處理 |
 | task-guide | 有重複案例時抽出資料驗證與歷史追加 | 文件格式與可共用範圍 |
-| component-member-order | Skill 判斷成員順序 | initializer, decorator 與非同步時序 |
+| angular-member-order | Skill 判斷成員順序 | initializer, decorator 與非同步時序 |
 | comfyui-workflow | 評估流程與環境清單比對 | 實際 graph 格式與版本案例 |
 | ai-application-engineering | 整理評估紀錄與 metrics | 既有評估方法與比較條件 |
 | jev-evaluation | 共用 client, Codex 連接留在 setup | 資料邊界與結果語意 |
 | license-maintainer | 掃描授權 metadata 與 SPDX 候選 | 來源, 權利歸屬與實際授權 |
-| filter-rule-maintenance | 使用目標引擎的 validator | 該平台的規則語意 |
+| network-filter-rules | 使用目標引擎的 validator | 該平台的規則語意 |
 | agent-governance / task-routing / coding-prompt | 保留需求與分工判斷流程 | 目標, 責任與授權 |
 | readme-maintainer / editorial-illustration | 保留來源判讀與創作流程 | 交付要求與實際材料 |
-| unity-development / vue-development | 使用專案原生檢查 | 引擎與 Framework 的工具鏈 |
+| unity-development / angular-development / react-development / vue-development | 使用專案原生檢查 | 引擎與 Framework 的工具鏈 |
+| game-balance-simulation | 沿用共用規則執行 headless 實驗 | 時間、隨機輸入、策略與可重播的失敗案例 |
 
 ## 什麼時候拆分或合併 Skill
 
@@ -63,7 +91,7 @@ Stable Diffusion / ComfyUI 沿用 comfyui-workflow, Unity 專案沿用 unity-dev
 | agent-governance / task-routing | 維護規則與角色 / 安排當次工作 |
 | readme-maintainer / doc-updater / document-production | 重整 README / 同步變更 / 製作文件 |
 | context-brief / task-guide / coding-prompt | 規格摘要 / 功能工作指引 / 單次交接 |
-| angular-architecture / system-design-analysis / research-learning-synthesis | Framework 架構 / 系統取捨 / 證據整理 |
+| angular-development / system-design-analysis / research-learning-synthesis | Framework 實作與按需架構 / 系統取捨 / 證據整理 |
 | document-source-matching / environment-consistency-check / validation-evidence-review | 文件來源 / 內容比對 / 驗證證據 |
 
 Skills 的發布組合包保留獨立目錄, 實際清單與 metadata 由 codex-setup 維護

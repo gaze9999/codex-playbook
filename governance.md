@@ -8,7 +8,7 @@
 |---|---|
 | ChatGPT 帳戶 | 帳戶自訂指示, 雲端記憶與已授權 App |
 | ChatGPT Project | 該 Project 的指示, 上傳檔案與連接來源 |
-| 本機 Codex App, CLI 與 IDE | 本機設定, 適用的 AGENTS.md, 已安裝 Skills 與 MCP |
+| 本機 Codex App, CLI 與 IDE | 本機設定、適用的 AGENTS.md、已安裝 Skills、Plugins 與 MCP |
 
 ChatGPT Project 的檔案透過上傳或連接提供, 本機 Codex 依工作目錄與 checkout 讀取專案, 雲端 Work 使用受管理的執行環境, 本機 config 留在本機, 詳見 [官方開發設定](https://learn.chatgpt.com/docs/developer-settings) 與 [Project 說明](https://learn.chatgpt.com/docs/projects)
 
@@ -26,7 +26,7 @@ ChatGPT Project 的檔案透過上傳或連接提供, 本機 Codex 依工作目�
 | 角色設定 | 該角色的責任與執行設定 | 唯讀調查, 可修改範圍與指定 model |
 | Skill | 可重用的條件式工作流程 | 安裝工具, 校對文案或分析 UI |
 | 專案規格 | 已確認的功能與資料要求 | 欄位, 流程, 狀態與錯誤處理 |
-| 對話或進度紀錄 | 當次目標與目前狀態 | 已完成項目, 檢查結果與下一步 |
+| 對話的 task context | 當次原始需求、後續引導與目前狀態 | 有效決策、已完成項目、待驗收與下一步 |
 
 例如, 所有專案都要使用台灣用語, 放 Global, 只有訂單模組的 API 欄位要求, 放專案規格, 本次查詢頁的修改進度, 留在對話或現有任務紀錄
 
@@ -58,6 +58,34 @@ Global 層在 Codex home 選取第一份非空指示, 優先使用 AGENTS.overri
 
 同一份演算法保留一個維護來源, 產生獨立副本時記錄版本與來源 hash, 工具改變後更新相依的整合程式
 
+## 新專案的 agent 規劃
+
+先讀實際專案、設定與現有指示, 再選 [Project starter](https://github.com/gaze9999/codex-setup/blob/main/skills/agent-governance/assets/project-starter/README.md) 中需要的範本, 專案層補充會影響該專案工作的事實, 來源範本與目前生效的指示分開核對
+
+| 層級 | 要保留的內容 | 建立條件 |
+|---|---|---|
+| root AGENTS.md | 模組責任、公開介面、Git 慣例與最小足夠驗證 | 專案共同規則需要持久保存 |
+| nested AGENTS.md | 所在模組的 runtime、實作模式與驗收差異 | 模組有不同責任或限制 |
+| 條件式 guide | 功能規格導覽、分流、進度與歷史更新方式 | 只有相關任務才需要的詳細程序 |
+| subagent role | 具體問題、可修改範圍、權限與預期回傳 | 已允許委派且工作可獨立驗收 |
+| task context | 本次需求、有效決策、owner、相依與未完成事項 | 當次執行與接續 |
+
+Main 保留需求、跨模組決策、必要直接實作、整合與最終驗收, 先沿用合適的既有角色, 規劃角色時保留同一功能的修改與檢查責任, shared interface 未確認前先處理相依, model 與 effort 依目前支援和工作不確定性判定
+
+以有 Backend、Host 與 custom element 的架構為例, Host 管理 session、導覽、權限與載入, 功能 UI 留在對應 custom element, payload、properties / events、路由、bundle 與共用資產由相關 owner 確認, 此例適用條件與指令見 [去識別化專案範本](https://github.com/gaze9999/codex-setup/blob/main/skills/agent-governance/assets/project-starter/examples/host-and-custom-elements/AGENTS.md)
+
+專案需要進度與歷史文件時, 先確認位置與觸發條件, 可以採用以下方式:
+
+- 有實質應用修改或會改變進度的新驗證時, 更新受影響進度並追加一則有日期的歷史
+- 有決策、阻礙或下一步變更時, 更新相關狀態, 需要回溯才保留前後決策與原因
+- 治理、工具或純文件修改只更新已授權文件, 應用進度依實際成果判定
+- 保留既有問題 ID, 已解決項目可用 `~~ISSUE-01~~` 並留下修正與證據, 新 ID 依專案既定順序配置
+- 紀錄使用專案約定的時區與分鐘時間戳記, 有相關且已核對的 commit 才附短 SHA 與具體變更, 未提交內容另外標明
+
+這些是可採用的專案紀錄方式, 每輪對話結束本身不要求追加歷史, 詳細範例見 [records guide](https://github.com/gaze9999/codex-setup/blob/main/skills/agent-governance/assets/project-starter/examples/host-and-custom-elements/.codex/agent-guidance/records.md)
+
+套用前移除私有路徑、公司或交易識別資訊, 用實際已確認內容取代待填欄位, 核對 root 與目標模組的指示鏈、大小限制、角色 TOML、權限與忽略檔, 新 worktree 另確認本機指示是否存在, 最後在目標環境核對載入, 文件解析成功只證明檔案格式
+
 ## 保存足夠的驗收證據
 
 | 項目 | 紀錄內容 |
@@ -68,7 +96,7 @@ Global 層在 Codex home 選取第一份非空指示, 優先使用 AGENTS.overri
 | 驗證 | 檢查方法, 環境, 結果與未涵蓋情境 |
 | 接續 | 尚未納入的更新, 阻礙與下一步 |
 
-沿用專案已有的紀錄, 保存能讓下一位接續的內容, 忽略檔也直接讀回檢查, 相關內容改變後更新驗收證據
+優先在目前對話保存能讓下一位接續的有效狀態, 只有明確要求或專案既有規範才更新允許位置的進度文件, 忽略檔也直接讀回檢查, 相關內容改變後更新驗收證據
 
 ## 授權與資料保護
 
@@ -95,6 +123,22 @@ ChatGPT 帳戶設定在介面套用, 本機設定在對應電腦安裝, 記憶�
 規格定義的標題, 欄位, 按鈕, 狀態, 提示文字與標點保留原文, 校對前先辨識這些文字與程式碼, 引用及 symbol, 逐項對照 lint 建議的修改範圍與來源, 規格文案變更需有明確授權
 
 對來源或方法有疑問時查 [research.md](research.md) 的官方文件與社群案例
+
+## 從 codex-setup 選擇教學內容
+
+先對照目前 [文件索引](https://github.com/gaze9999/codex-setup/blob/main/docs/README.md)、相關 diff 與 Playbook 章節, 依對讀者的影響選擇更新, 來源尚在重整時核對目前檔案, 以來源檢視說明可確認的內容
+
+| setup 來源 | 可轉成教學的內容 | Playbook 位置 |
+|---|---|---|
+| [Agents](https://github.com/gaze9999/codex-setup/blob/main/docs/agents.md) 與治理參考 | 規則放哪裡、如何延續需求、回報與驗收 | 本頁、workflow.md、prompts.md |
+| [Skills](https://github.com/gaze9999/codex-setup/blob/main/docs/skills.md) 與相關 SKILL.md | 使用時機、預期產物、相依與常見判斷 | toolkit-roadmap.md 及對應主題 |
+| [MCP](https://github.com/gaze9999/codex-setup/blob/main/docs/mcp.md) 與工具文件 | 依能力選介面、帳戶與資料範圍、代表性呼叫 | portability.md、toolkit-roadmap.md |
+| [Plugins](https://github.com/gaze9999/codex-setup/blob/main/docs/plugins.md) | 套件、Skill 鏡像與帳戶連接的管理方式 | portability.md、toolkit-roadmap.md |
+| [安裝與管理](https://github.com/gaze9999/codex-setup/blob/main/docs/setup/cli.md) 與使用教學 | 操作順序、有效入口與故障判讀 | portability.md、jev.md 及對應主題 |
+
+可重用且有來源支持的方法納入教學, 技術版本、完整工具清單、安裝實作與參數由 setup 維護並連回來源, 個人設定值與一次性的操作紀錄留在所屬環境
+
+已經涵蓋的原則保留, 名稱、路徑或行為改變時更新受影響段落與引用, 新主題需要獨立閱讀時才新增教學頁, 規則範本說明如何採用, 實際操作結果依對應版本與環境的證據回報
 
 ## 從對話提煉教學
 

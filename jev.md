@@ -4,7 +4,7 @@ Jev 是 TypeSafe 提供的語意評估 model, 適合判斷文字是否符合一�
 
 例如, 已找到多份公開的錯誤處理文件, 想先讀最接近目前問題的段落, 可以讓 Jev 評估相關性, Main 再核對原文與實際需求
 
-操作方式見 [Jev Skill](https://github.com/gaze9999/codex-setup/blob/main/skills/jev-evaluation/SKILL.md) 與 [使用教學](https://github.com/gaze9999/codex-setup/blob/main/docs/jev-usage.md)
+操作方式見 [Jev Skill](https://github.com/gaze9999/codex-setup/blob/main/skills/jev-evaluation/SKILL.md) 與 [使用教學](https://github.com/gaze9999/codex-setup/blob/main/docs/usage/jev.md)
 
 ## 先用本機搜尋整理候選
 

@@ -45,7 +45,7 @@ Test Impact Analysis 的文件列有 Visual Studio Test 與 .NET Framework 等�
 | [TypeSafe Confidence](https://docs.typesafe.ai/confidence) | Choice / Score 的 confidence 與 Noul 機率 | 理解回應欄位, 再用自己的案例校準門檻 |
 | [Jev 1.13 已知失敗情境](https://docs.typesafe.ai/model-jaggedness/jev-1.13) | 數值, 日期, 無關資料與複雜間接問題的限制 | 本機先整理資料, 精確比較交給程式 |
 
-工作中的使用時機見 [jev.md](jev.md), 設定與 API 操作由 [codex-setup](https://github.com/gaze9999/codex-setup/blob/main/docs/jev-usage.md) 維護
+工作中的使用時機見 [jev.md](jev.md), 設定與 API 操作由 [codex-setup](https://github.com/gaze9999/codex-setup/blob/main/docs/usage/jev.md) 維護
 
 ## 想比較改善效果, 要記錄什麼
 
