@@ -34,6 +34,7 @@
 | Context | Agent 目前用來判斷的資料, 包含需求, 規格, 程式碼與先前決策 |
 | AGENTS.md | Codex 讀取的文字指示, 用來保存共用偏好或專案規則 |
 | Skill | 可重用的工作流程, 說明何時使用, 怎麼執行與如何驗收 |
+| Plugin | 組合 Skills、MCP 或 app 能力的套件, 安裝與帳戶連接依目標用戶端處理 |
 | MCP | 讓 agent 連接工具與外部系統的協定, 例如查文件或操作瀏覽器 |
 | CLI | 在終端機執行的工具, Agent 也可以透過命令使用 |
 | 驗收條件 | 能觀察或檢查的完成標準, 例如輸入, 操作與預期結果 |
@@ -58,6 +59,8 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 工具�
 | 持續研究新技術與安排學習 | [知識追蹤](knowledge-radar.md) |
 | 檢查應用程式的安全風險 | [紅隊檢查](red-team.md) |
 | 決定新增 Skill 或抽出通用工具 | [工具化規劃](toolkit-roadmap.md) |
+| 選擇 Skill、CLI、MCP 或 Plugin | [工作能力與介面選擇](toolkit-roadmap.md#按任務選工具介面) |
+| 比較遊戲策略、成長節奏與隨機獎勵 | [遊戲數值與模擬](game-balance.md) |
 
 先讀與目前任務相關的頁面, 詳細資料在需要時再補
 
@@ -66,7 +69,7 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 工具�
 | 位置 | 保存內容 |
 |---|---|
 | [my-py-tools](https://github.com/gaze9999/my-py-tools) | 可獨立使用的 Python 工具與共用程式 |
-| [codex-setup](https://github.com/gaze9999/codex-setup) | 可安裝的 Codex 指示, Skills, MCP 設定與安裝工具 |
+| [codex-setup](https://github.com/gaze9999/codex-setup) | Agent 治理來源、自訂 Skills、Plugin 管理入口及 MCP 安裝整合 |
 | codex-playbook | 教學, 判斷理由與可複製範例 |
 | 專案文件 | 該專案的規格, 架構, 決策與驗收紀錄 |
 | 私人筆記 | 個人學習紀錄, 未公開工作與私人資料 |
@@ -76,5 +79,7 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 工具�
 ## 維護方式
 
 工作方法與範例在這裡更新, 安裝工具與可執行 Skills 回到 codex-setup 更新, 研究來源與教學依據保存在 research.md
+
+更新前對照 setup 的 [文件索引](https://github.com/gaze9999/codex-setup/blob/main/docs/README.md) 與目前實作, 先修正失效入口, 再補使用時機、判斷方式與驗收範例, 選材方式見 [從來源更新教學](governance.md#從-codex-setup-選擇教學內容)
 
 本 repository 以 main 分支文件作為目前版本, 檢查後依授權 commit 與 push, 需要固定引用時使用 commit permalink
