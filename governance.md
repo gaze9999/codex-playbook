@@ -60,7 +60,7 @@ Global 層在 Codex home 選取第一份非空指示, 優先使用 AGENTS.overri
 
 ## 新專案的 agent 規劃
 
-先讀實際專案、設定與現有指示, 再選 [Project starter](https://github.com/gaze9999/codex-setup/blob/main/skills/agent-governance/assets/project-starter/README.md) 中需要的範本, 專案層補充會影響該專案工作的事實, 來源範本與目前生效的指示分開核對
+先讀實際專案、設定與現有指示, 依模組責任與驗收差異建立需要的指示或 guide, 專案層補充會影響該專案工作的事實, 採用範本時先改成實際已確認內容, 再核對目前生效的指示
 
 | 層級 | 要保留的內容 | 建立條件 |
 |---|---|---|
@@ -72,7 +72,7 @@ Global 層在 Codex home 選取第一份非空指示, 優先使用 AGENTS.overri
 
 Main 保留需求、跨模組決策、必要直接實作、整合與最終驗收, 先沿用合適的既有角色, 規劃角色時保留同一功能的修改與檢查責任, shared interface 未確認前先處理相依, model 與 effort 依目前支援和工作不確定性判定
 
-以有 Backend、Host 與 custom element 的架構為例, Host 管理 session、導覽、權限與載入, 功能 UI 留在對應 custom element, payload、properties / events、路由、bundle 與共用資產由相關 owner 確認, 此例適用條件與指令見 [去識別化專案範本](https://github.com/gaze9999/codex-setup/blob/main/skills/agent-governance/assets/project-starter/examples/host-and-custom-elements/AGENTS.md)
+以有 Backend、Host 與 custom element 的架構為例, Host 管理 session、導覽、權限與載入, 功能 UI 留在對應 custom element, payload、properties / events、路由、bundle 與共用資產由相關 owner 確認, 實際專案採用其他架構時依其模組責任規劃
 
 專案需要進度與歷史文件時, 先確認位置與觸發條件, 可以採用以下方式:
 
@@ -82,7 +82,7 @@ Main 保留需求、跨模組決策、必要直接實作、整合與最終驗收
 - 保留既有問題 ID, 已解決項目可用 `~~ISSUE-01~~` 並留下修正與證據, 新 ID 依專案既定順序配置
 - 紀錄使用專案約定的時區與分鐘時間戳記, 有相關且已核對的 commit 才附短 SHA 與具體變更, 未提交內容另外標明
 
-這些是可採用的專案紀錄方式, 每輪對話結束本身不要求追加歷史, 詳細範例見 [records guide](https://github.com/gaze9999/codex-setup/blob/main/skills/agent-governance/assets/project-starter/examples/host-and-custom-elements/.codex/agent-guidance/records.md)
+這些是可採用的專案紀錄方式, 每輪對話結束本身不要求追加歷史, 例如修正查詢錯誤後, 紀錄受影響行為、實際檢查、仍待驗收條件與下一步, 已有相關 commit 時再附其短 SHA
 
 套用前移除私有路徑、公司或交易識別資訊, 用實際已確認內容取代待填欄位, 核對 root 與目標模組的指示鏈、大小限制、角色 TOML、權限與忽略檔, 新 worktree 另確認本機指示是否存在, 最後在目標環境核對載入, 文件解析成功只證明檔案格式
 
@@ -110,8 +110,8 @@ Main 保留需求、跨模組決策、必要直接實作、整合與最終驗收
 
 | 變更 | 更新位置 |
 |---|---|
-| 通用 Python 工具 | my-py-tools |
-| Codex 指示, Skills 與安裝整合 | codex-setup |
+| 通用 CLI 或共用程式 | 該工具的維護來源 |
+| Codex 指示, Skills 與安裝整合 | 所屬設定或 Skill 來源 |
 | 教學方法與研究參考 | codex-playbook |
 | 實際功能與架構 | 對應專案 |
 | 個人學習與私人紀錄 | 私人筆記 |
@@ -124,19 +124,19 @@ ChatGPT 帳戶設定在介面套用, 本機設定在對應電腦安裝, 記憶�
 
 對來源或方法有疑問時查 [research.md](research.md) 的官方文件與社群案例
 
-## 從 codex-setup 選擇教學內容
+## 從實際來源選擇教學內容
 
-先對照目前 [文件索引](https://github.com/gaze9999/codex-setup/blob/main/docs/README.md)、相關 diff 與 Playbook 章節, 依對讀者的影響選擇更新, 來源尚在重整時核對目前檔案, 以來源檢視說明可確認的內容
+先對照實際環境的指示、工具文件、相關 diff 與 Playbook 章節, 依對讀者的影響選擇更新, 來源尚在重整時核對目前檔案, 以來源檢視說明可確認的內容
 
-| setup 來源 | 可轉成教學的內容 | Playbook 位置 |
+| 來源 | 可轉成教學的內容 | Playbook 位置 |
 |---|---|---|
-| [Agents](https://github.com/gaze9999/codex-setup/blob/main/docs/agents.md) 與治理參考 | 規則放哪裡、如何延續需求、回報與驗收 | 本頁、workflow.md、prompts.md |
-| [Skills](https://github.com/gaze9999/codex-setup/blob/main/docs/skills.md) 與相關 SKILL.md | 使用時機、預期產物、相依與常見判斷 | toolkit-roadmap.md 及對應主題 |
-| [MCP](https://github.com/gaze9999/codex-setup/blob/main/docs/mcp.md) 與工具文件 | 依能力選介面、帳戶與資料範圍、代表性呼叫 | portability.md、toolkit-roadmap.md |
-| [Plugins](https://github.com/gaze9999/codex-setup/blob/main/docs/plugins.md) | 套件、Skill 鏡像與帳戶連接的管理方式 | portability.md、toolkit-roadmap.md |
-| [安裝與管理](https://github.com/gaze9999/codex-setup/blob/main/docs/setup/cli.md) 與使用教學 | 操作順序、有效入口與故障判讀 | portability.md、jev.md 及對應主題 |
+| Agent 指示與治理參考 | 規則放哪裡、如何延續需求、回報與驗收 | 本頁、workflow.md、prompts.md |
+| Skill 說明與相關 SKILL.md | 使用時機、預期產物、相依與常見判斷 | toolkit-roadmap.md 及對應主題 |
+| MCP 與工具文件 | 依能力選介面、帳戶與資料範圍、代表性呼叫 | portability.md、toolkit-roadmap.md |
+| Plugin 說明 | 套件、Skill 鏡像與帳戶連接的管理方式 | portability.md、toolkit-roadmap.md |
+| 安裝與管理文件 | 操作順序、有效入口與故障判讀 | portability.md、jev.md 及對應主題 |
 
-可重用且有來源支持的方法納入教學, 技術版本、完整工具清單、安裝實作與參數由 setup 維護並連回來源, 個人設定值與一次性的操作紀錄留在所屬環境
+可重用且有來源支持的方法納入教學, 必要步驟在對應章節說明, 技術版本、完整工具清單、安裝實作與參數依目標環境及所用工具核對, 個人設定值與一次性的操作紀錄留在所屬環境
 
 已經涵蓋的原則保留, 名稱、路徑或行為改變時更新受影響段落與引用, 新主題需要獨立閱讀時才新增教學頁, 規則範本說明如何採用, 實際操作結果依對應版本與環境的證據回報
 

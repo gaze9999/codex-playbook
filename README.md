@@ -41,7 +41,7 @@
 | Worktree | 同一個 Git repository 的另一份工作目錄, 可供不同分支各自修改 |
 | Repository | Git 管理的專案存放庫, 保存檔案與修改歷史 |
 
-AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 工具的安裝與接法集中在 [codex-setup](https://github.com/gaze9999/codex-setup)
+AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 使用前依實際環境確認入口、權限與資料範圍, 安裝順序見 [安裝與換機](portability.md)
 
 ## 依需求閱讀
 
@@ -68,8 +68,8 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 工具�
 
 | 位置 | 保存內容 |
 |---|---|
-| [my-py-tools](https://github.com/gaze9999/my-py-tools) | 可獨立使用的 Python 工具與共用程式 |
-| [codex-setup](https://github.com/gaze9999/codex-setup) | Agent 治理來源、自訂 Skills、Plugin 管理入口及 MCP 安裝整合 |
+| 工具來源 | 可獨立使用的 CLI 與共用程式 |
+| 設定與安裝來源 | Agent 指示、Skills、Plugin 與 MCP 的設定及安裝方式 |
 | codex-playbook | 教學, 判斷理由與可複製範例 |
 | 專案文件 | 該專案的規格, 架構, 決策與驗收紀錄 |
 | 私人筆記 | 個人學習紀錄, 未公開工作與私人資料 |
@@ -78,8 +78,8 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 工具�
 
 ## 維護方式
 
-工作方法與範例在這裡更新, 安裝工具與可執行 Skills 回到 codex-setup 更新, 研究來源與教學依據保存在 research.md
+工作方法與範例在這裡更新, 工具、設定與 Skills 由各自來源維護, 研究來源與教學依據保存在 research.md
 
-更新前對照 setup 的 [文件索引](https://github.com/gaze9999/codex-setup/blob/main/docs/README.md) 與目前實作, 先修正失效入口, 再補使用時機、判斷方式與驗收範例, 選材方式見 [從來源更新教學](governance.md#從-codex-setup-選擇教學內容)
+更新前對照目前環境、相關實作與既有章節, 先修正失效入口, 再補使用時機、判斷方式與驗收範例, 選材方式見 [從來源更新教學](governance.md#從實際來源選擇教學內容)
 
 本 repository 以 main 分支文件作為目前版本, 檢查後依授權 commit 與 push, 需要固定引用時使用 commit permalink

@@ -4,7 +4,7 @@ Jev 是 TypeSafe 提供的語意評估 model, 適合判斷文字是否符合一�
 
 例如, 已找到多份公開的錯誤處理文件, 想先讀最接近目前問題的段落, 可以讓 Jev 評估相關性, Main 再核對原文與實際需求
 
-操作方式見 [Jev Skill](https://github.com/gaze9999/codex-setup/blob/main/skills/jev-evaluation/SKILL.md) 與 [使用教學](https://github.com/gaze9999/codex-setup/blob/main/docs/usage/jev.md)
+使用時先確認環境可呼叫的介面、帳戶與資料範圍, 依該版本支援的參數提出一項判斷問題, 本頁說明候選整理、結果核對與失敗時的接續方式
 
 ## 先用本機搜尋整理候選
 
@@ -24,7 +24,7 @@ Jev 使用遠端服務, Query, 判斷條件與候選文字都會送到 provider,
 
 必讀指示, 主要規格, 驗收條件與已確認決策保留在 Main, 排序用於安排可選資料的閱讀順序
 
-Rank helper 將必讀項目留在本機, 可選候選使用不含來源資訊的 ID, ID 與檔案位置對照保存在本機, 結果保留全部候選
+整理排序輸入時, 將必讀項目留在本機, 可選候選使用不含來源資訊的 ID, ID 與檔案位置對照保存在本機, 結果保留全部候選
 
 ## 把問題問清楚
 

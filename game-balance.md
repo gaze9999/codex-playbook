@@ -1,6 +1,6 @@
 # 遊戲數值與可重現模擬
 
-先說清楚希望改善的玩家體驗, 再用實際遊戲規則比較進度、選擇與失敗情境, 方法依 [Game Balance Simulation Skill](https://github.com/gaze9999/codex-setup/blob/main/skills/game-balance-simulation/SKILL.md), 工具與相依見 [用途與工作流程](https://github.com/gaze9999/codex-setup/blob/main/docs/tools/workflows.md)
+先說清楚希望改善的玩家體驗, 再用實際遊戲規則比較進度、選擇與失敗情境, 保存來源、輸入與執行條件, 讓候選方案和失敗案例能重播
 
 ## 從一個代表循環開始
 

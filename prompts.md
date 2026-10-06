@@ -4,7 +4,7 @@
 
 提示詞先交代目標與驗收, 再補來源, 修改範圍與需要保留的內容, model 與工具依當次環境選擇
 
-以下 coding prompt 與回報示意以 codex-setup 的 [執行與回報指引](https://github.com/gaze9999/codex-setup/blob/main/skills/agent-governance/references/task-execution-and-reporting.md) 為依據, 主要情境分開呈現給 AI 的 prompt, 預期交付與預期回報示意
+以下主要情境分開呈現給 AI 的 prompt, 預期交付與預期回報示意, 執行方式與驗收見 [開發流程](workflow.md)
 
 目標與範圍預設維持, 必要相依, 驗收缺口或已確認風險需要擴張時, 先交代原因, 依據, 影響範圍與新增驗收, 沿既有授權處理, 超出明確限制或權限邊界時才取得必要決策或授權
 

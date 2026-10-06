@@ -1,14 +1,14 @@
 # Skill 與通用工具怎麼規劃
 
-先找目前缺少的工作能力, 再決定補 Skill、整合現有工具或抽出共用程式, 目前流程見 [Skill 清單](https://github.com/gaze9999/codex-setup/blob/main/docs/skills.md), 技術介面與相依由 setup 的 [工具文件](https://github.com/gaze9999/codex-setup/blob/main/docs/tools/selection.md) 維護
+先找目前缺少的工作能力, 再決定補 Skill、整合現有工具或抽出共用程式, 依本頁選擇工作流程與介面, 相依準備及實際呼叫驗證見 [安裝與換機](portability.md)
 
 ## 先決定放哪裡
 
 | 工作特性 | 適合位置 |
 |---|---|
 | 需要解讀需求, 判斷來源與取捨 | Skill |
-| 輸入輸出明確, 可測試且能獨立使用 | my-py-tools 的 CLI 或共用程式 |
-| Codex 工具註冊, Skill 安裝與連接 | codex-setup |
+| 輸入輸出明確, 可測試且能獨立使用 | 所屬工具的 CLI 或共用程式 |
+| Codex 工具註冊, Skill 安裝與連接 | 所屬用戶端與設定來源 |
 | 教學, 採用理由與範例 | codex-playbook |
 | 個人興趣, 學習紀錄與排程 | 私人筆記與已授權的排程 |
 
@@ -33,9 +33,11 @@
 
 候選清單、安裝完成、設定已註冊、目前 session 已載入、帳戶已授權與實際呼叫成功分開核對, 缺少能力只阻擋相依部分, 安裝或擴大 roots 依該動作的授權處理
 
-自訂 Skill 與第三方 Plugin 分別沿用自己的管理來源, setup 的 Plugin 清單顯示本機設定名稱與啟用狀態, 安裝與帳戶連接見 [Plugin 說明](https://github.com/gaze9999/codex-setup/blob/main/docs/plugins.md), 不由 Skill 鏡像同步推論 Plugin 安裝完成
+自訂 Skill 與第三方 Plugin 分別沿用自己的管理來源, 核對 Plugin 的安裝、啟用狀態、帳戶連接與實際能力, Skill 鏡像同步只證明其檔案狀態
 
-## 已有的工作流程
+## 可搭配的工作流程
+
+以下名稱是依工作能力分組的 Skill 範例, 使用前確認目前環境是否具備、啟用條件是否相符, 沒有對應 Skill 時仍可依本指南完成相關工作
 
 | Skill | 使用時機 |
 |---|---|
@@ -67,14 +69,14 @@ Stable Diffusion / ComfyUI 沿用 comfyui-workflow, Unity 專案沿用 unity-dev
 | document-source-matching | 沿用文件定位與來源比對工具 | 原始文件, 抽出版與缺漏情況 |
 | environment-consistency-check | 沿用目錄與檔案比對工具 | 相對路徑, hash 與差異種類 |
 | validation-evidence-review | 沿用驗證紀錄索引 | 結果對應的內容版本與環境 |
-| document-production | Markdown 結構檢查已有共用核心 | 其他格式的內容與渲染檢查 |
+| document-production | 有既有工具時沿用 Markdown 結構檢查核心 | 其他格式的內容與渲染檢查 |
 | context-brief | 比較既有文字抽取與 OCR 工具 | 格式, metadata, 相依與失敗處理 |
 | doc-updater | 評估抽出 Git 變更分類與安全寫入 | 整檔或章節更新, 備份與衝突處理 |
 | task-guide | 有重複案例時抽出資料驗證與歷史追加 | 文件格式與可共用範圍 |
 | angular-member-order | Skill 判斷成員順序 | initializer, decorator 與非同步時序 |
 | comfyui-workflow | 評估流程與環境清單比對 | 實際 graph 格式與版本案例 |
 | ai-application-engineering | 整理評估紀錄與 metrics | 既有評估方法與比較條件 |
-| jev-evaluation | 共用 client, Codex 連接留在 setup | 資料邊界與結果語意 |
+| jev-evaluation | 共用 client, 用戶端串接依其介面管理 | 資料邊界與結果語意 |
 | license-maintainer | 掃描授權 metadata 與 SPDX 候選 | 來源, 權利歸屬與實際授權 |
 | network-filter-rules | 使用目標引擎的 validator | 該平台的規則語意 |
 | agent-governance / task-routing / coding-prompt | 保留需求與分工判斷流程 | 目標, 責任與授權 |
@@ -94,7 +96,7 @@ Stable Diffusion / ComfyUI 沿用 comfyui-workflow, Unity 專案沿用 unity-dev
 | angular-development / system-design-analysis / research-learning-synthesis | Framework 實作與按需架構 / 系統取捨 / 證據整理 |
 | document-source-matching / environment-consistency-check / validation-evidence-review | 文件來源 / 內容比對 / 驗證證據 |
 
-Skills 的發布組合包保留獨立目錄, 實際清單與 metadata 由 codex-setup 維護
+Skills 的發布組合包保留獨立目錄, 每項清單、metadata 與版本由其維護來源管理
 
 ## 抽出共用程式的步驟
 
@@ -108,6 +110,6 @@ Skills 的發布組合包保留獨立目錄, 實際清單與 metadata 由 codex-
 
 ## 下一步怎麼排
 
-Markdown 結構檢查已有共用核心與產生的獨立副本, 後續優先評估真實重複案例, 例如文件安全寫入, Git 變更分類與 OCR 整合
+有共用核心時先核對支援格式與內容版本, 後續優先評估真實重複案例, 例如文件安全寫入, Git 變更分類與 OCR 整合
 
 先確認輸入輸出相容與維護收益, 每次遷移一個功能並核對原有行為, 原始碼與實作狀態以各工具來源為準

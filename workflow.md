@@ -155,7 +155,7 @@ Main 對照原始需求, 穩定的 diff 與實際成果驗收, 有需要獨立�
 
 目標與範圍預設維持, 必要相依, 驗收缺口或已確認風險需要擴張時, 交代原因, 依據, 影響範圍與新增驗收, 沿既有授權處理, 跨越明確限制或權限邊界前取得必要決策或授權, 可選建議附依據, 適用情境與下一步, 採用後再納入工作
 
-不同交付類型的 prompt, 預期成果與 Markdown 回報示意見 [提示詞範例](prompts.md), 維護依據見 codex-setup 的 [執行與回報指引](https://github.com/gaze9999/codex-setup/blob/main/skills/agent-governance/references/task-execution-and-reporting.md)
+不同交付類型的 prompt, 預期成果與 Markdown 回報示意見 [提示詞範例](prompts.md), 指示分層與紀錄方式見 [指示與紀錄管理](governance.md)
 
 在階段完成, 重要決策或範圍改變, 出現阻礙及交接前, 更新同一份有效狀態, 保存目標, 授權, 已確認決策, 負責人, 產物版本, 檢查結果與下一步, 不必預知何時會發生 Context 壓縮 (compaction)
 
