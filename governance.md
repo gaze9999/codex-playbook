@@ -179,3 +179,13 @@ ChatGPT 帳戶設定在介面套用, 本機設定在對應電腦安裝, 記憶�
 少量代表案例可檢查明確指定、自然描述、相近但不應啟用的要求, 再加入真實出現的需求更正與唯讀邊界. 記錄實際產物及操作證據, 結構檢查和模型行為驗收各自回報, 參考 [OpenAI Skill 評估方法](https://developers.openai.com/blog/eval-skills)
 
 繁中交付包含進度、交接與完成回報, 送出前人工核對繁體字、台灣用語、計數與證據來源. 例如測試項目、資料組合、執行批次各自計數, 型別檢查受阻與正式 API 未驗證保留影響及下一步, 詞表通過仍須複核語意
+
+## 版本與發布的界線
+
+可在個人工作規範定義 `cp` 為 commit / push, `cpr` 為依專案流程完成發布. 文件專案可能以推送作為交付, 版本修改或封裝不新增發布授權
+
+[SemVer](https://semver.org/lang/zh-TW/)以相容性區分 major / minor / patch, 不規定發布週期. 依使用者影響、必要驗收與既有流程安排發布, 不每次修改都發, patch 也可正式發布. Skill、Plugin、核心套件及整包版本分開管理
+
+README 要能依實際版本完成安裝 / 使用, LICENSE 與必要 notices 要涵蓋實際產物, 變更說明交代使用者影響與遷移. GitHub 社群文件依用途加入, 不當成固定發布門檻. [不可變發布](https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases)先附齊 draft 資產再發布, 與發布後才上傳的 workflow 需先核對相容性
+
+規格衝突先核對本機來源、時間線、差異及確認決策. 評估工具可協助排序待查證據或分類獲准外傳的摘要, 保留未知結果, 不以分數取代規格權威或確認, 匿名化仍需符合外傳授權
