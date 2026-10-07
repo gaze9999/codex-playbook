@@ -25,6 +25,8 @@ git clone https://github.com/gaze9999/codex-playbook.git
 
 本 Playbook 的根目錄 AGENTS.md 留在本機並由 .gitignore 忽略, 換電腦維護時依 [指示管理](governance.md) 準備本機規則, research.md 隨 repository 保留作為教學參考
 
+公開工具可使用 [Codex Toolkit 市集或獨立 Python](marketplace.md), 個人環境選項另保存在自己的私人設定來源, 不需要取得作者的私人 repository
+
 ## 2. 準備 Global 指示與角色設定
 
 確認目標用戶端使用的 Global 指示與角色設定位置, 先備份現有內容, 比對可攜來源後合併需要的規則, 保留 model、provider、MCP、permissions 與登入資料
@@ -84,6 +86,14 @@ Windows 更新 CLI 後確認命令位置與版本, 調整 PATH 前先備份並�
 ChatGPT 帳戶指示、Project、雲端記憶與 Work 寫作風格在各自介面設定, 範例及位置見 [web-settings.md](web-settings.md)
 
 套用後讀回內容, 在目標環境的新對話確認, 文件或片段已準備、設定已保存與實際生效分別回報, 記憶內容與私人權限規則留在個人環境
+
+## 工作規範與 Plugin 的日常更新
+
+先預覽選定來源與已安裝項目的差異, 再套用已授權範圍, 保存備份、來源版本及相對路徑 hash. Plugin 更新使用用戶端支援的原生入口, 保留其他套件、啟用狀態與帳戶, 不直接改 client 管理的快取
+
+本機工作樹快照可用來試行尚未提交的修改, 需明確標示來源 HEAD 與未提交內容. 正式發布另依乾淨已提交來源及發布驗收, 本機同步不代表其他電腦已更新
+
+驗證工具記錄實際使用的 interpreter、版本與必要相依, 既有相容環境可重用, 工具或 bundled runtime 更新後先確認能力是否仍存在. 來源正確、同步一致、安裝成功與新對話載入分別核對
 
 ## 8. 換機後開始工作
 

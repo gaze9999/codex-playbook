@@ -49,6 +49,7 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 使用�
 |---|---|
 | 完成一個功能或修正問題 | [開發流程](workflow.md) |
 | 複製 coding prompt, 對照預期交付與回報示意 | [提示詞範例](prompts.md) |
+| 加入公開市集或獨立使用 Python 工具 | [市集與獨立工具](marketplace.md) |
 | 換電腦, 安裝 Skills 或連接 MCP | [安裝與換機](portability.md) |
 | 決定規則, 規格與進度要放哪裡 | [指示與紀錄管理](governance.md) |
 | 將對話中的方法整理成可重用教學 | [對話轉教學](governance.md#從對話提煉教學), [提示詞範例](prompts.md#從目前對話整理教學) |
@@ -68,8 +69,8 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 使用�
 
 | 位置 | 保存內容 |
 |---|---|
-| 工具來源 | 可獨立使用的 CLI 與共用程式 |
-| 設定與安裝來源 | Agent 指示、Skills、Plugin 與 MCP 的設定及安裝方式 |
+| [codex-toolkit](https://github.com/gaze9999/codex-toolkit) | 公開 Skills、市集、MCP、CLI 與 Python 核心 |
+| 私人設定來源 | 個人工作規範、已選項目、平台設定及還原 profile |
 | codex-playbook | 教學, 判斷理由與可複製範例 |
 | 專案文件 | 該專案的規格, 架構, 決策與驗收紀錄 |
 | 私人筆記 | 個人學習紀錄, 未公開工作與私人資料 |

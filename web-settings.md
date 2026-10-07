@@ -55,7 +55,7 @@ ChatGPT 帳戶, Project 與本機 Codex 設定分別管理, 依執行環境確�
 在負責維護 Codex 設定與 Playbook 的 ChatGPT Project 使用, 一般帳戶偏好沿用上一節
 
 ```text
-此 Project 維護 Codex 工作方式, Global 指示, 專案 agent / subagent, Skills, MCP 與教學, 依當次要求處理治理及文件, 應用程式功能依指定任務處理
+此 Project 維護 Codex 工作方式, Global 指示, 專案 agent / subagent, Skills, MCP 與教學, 依當次要求處理工作規範及文件, 應用程式功能依指定任務處理
 
 開始前確認適用指示, 執行環境, 目標來源, 權限與相關變更, 各 repository 的規則適用各自範圍, 保留無關變更
 
