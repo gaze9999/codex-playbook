@@ -189,3 +189,33 @@ ChatGPT 帳戶設定在介面套用, 本機設定在對應電腦安裝, 記憶�
 README 要能依實際版本完成安裝 / 使用, LICENSE 與必要 notices 要涵蓋實際產物, 變更說明交代使用者影響與遷移. GitHub 社群文件依用途加入, 不當成固定發布門檻. [不可變發布](https://docs.github.com/en/code-security/concepts/supply-chain-security/immutable-releases)先附齊 draft 資產再發布, 與發布後才上傳的 workflow 需先核對相容性
 
 規格衝突先核對本機來源、時間線、差異及確認決策. 評估工具可協助排序待查證據或分類獲准外傳的摘要, 保留未知結果, 不以分數取代規格權威或確認, 匿名化仍需符合外傳授權
+
+## 依專案環境與交付階段選分工
+
+先從 manifests、既有檢查與實作確認環境, Main 保留需求、跨模組決策、直接實作與整體驗收, 需要獨立查證才用 Explorer, 可獨立交付的修改交 Worker, 有具體風險才安排唯讀 Reviewer. 可選角色範本只提供工作邊界, 委派仍依當次授權與環境限制, 參考 [官方 subagent 指引](https://learn.chatgpt.com/docs/agent-configuration/subagents)
+
+| 情境 | 分工與驗收重點 |
+|---|---|
+| CLI / 桌面工具 | 核心與平台入口分清, 原始碼檢查、原生封裝與使用端執行分別驗收 |
+| 共用 UI / 瀏覽器遊戲 | State、非同步、存檔及使用端介面有單一負責人, 分頁、session 與服務埠需隔離 |
+| Unity / Unreal | 耦合 gameplay、binary assets 與序列化同一負責人, editor 檢查另保留 player / cooked build 與目標硬體驗收 |
+| LLM / 模型工作流 | 程式邊界與模型評估分開, 使用獲准資料、版本化案例及獨立驗收集, GPU / 用量有共同影響時依序 |
+
+測試策略從改變的行為、規格與未排除風險選最小足夠檢查, 有需要才用 test-strategy, 已產生結果交 validation-evidence-review 分析. 確認 PASS、覆蓋率、模型分數與 CPU / 記憶體各自能證明什麼, 不合併成整體正確率. 共用介面與可變資源尚未隔離時, 不因不同檔案或 worktree 就平行
+
+MCP 依缺少的能力、實際版本、權限與維護品質選用, 社群案例用來找待驗證問題, 聲量不取代相容性或操作證據. 尚未確認專案與 engine 版本的 adapter 留候選, 不預先安裝
+
+## 專案 agent 的公開性與保存
+
+建立專案 agent 前先核對 remote 的公開性及檔案追蹤狀態. Public repo 的本機 AGENTS.md、role 與專案 agent guide 預設加入本機 Git exclude, Private repo 才預設可納入已審查的可攜指引, 機敏資料與機器設定仍留本機. 公開性不明時先留本機, 明確要求公開散布的中性範本或共用協作指引可另行納入版控
+
+用 `git rev-parse --git-path info/exclude` 找實際 exclude 位置, 只加入本次產生且需要排除的路徑, 保留原規則. 用 `git check-ignore -v` 核對未追蹤檔, 另用 `git ls-files` 核對已追蹤檔. Ignore 不會取消既有追蹤, 不自動移除檔案或改歷史, 也不整批忽略 `.codex/`、Skills 或外掛資產. 這項預設不新增 commit / push 授權
+
+
+## 機敏資料外洩與清理
+
+發現密碼、Token 或 Key 外洩時先撤銷 / 輪替, 刪檔或加入 ignore 不會清除既有 Git 歷史. `cp` / `cpr` 不包含歷史重寫、force-push 或調整保護規則, 清理前另確認範圍與授權
+
+本機歷史、遠端 refs、forks、舊 clones、PR 快取與 LFS 分別核對, 不以一次 push 成功稱已全部清除. 工具的預覽與 help 保持唯讀, 實際清理依 [GitHub 官方步驟](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository)及當次協作狀況處理
+
+發布時核對實際散布內容, 含 ZIP、wheel、Plugin、範例與設定, 不只檢查目前程式碼. Secret scanning、push protection 與 hooks 依需要選用, 不因文件建議自動安裝或變更設定
