@@ -60,6 +60,8 @@
 
 Stable Diffusion / ComfyUI 沿用 comfyui-workflow, Unity 專案沿用 unity-development, 安全檢查使用適用的安全工作流程
 
+遊戲數值流程見 [game-balance.md](game-balance.md), 引擎與場景維護留在各專案工作流程, 通用 Skill 與工具設定由所屬來源維護
+
 有真實 ML 實驗專案後, 再補資料來源, 訓練與測試切分, seed, 環境, model 設定及指標比較
 
 ## 哪些部分適合工具化

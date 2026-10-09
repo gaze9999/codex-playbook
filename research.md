@@ -37,6 +37,27 @@ Test Impact Analysis 的文件列有 Visual Studio Test 與 .NET Framework 等�
 
 社群貼文中的 model, effort 與設定屬於作者當時環境, 教學使用其工作問題與分工方法, 實作時回到官方文件及目前專案確認
 
+## 遊戲開發與數值研究
+
+2026-10-05 查閱 Machinations, 科學計算, 公式與 property-based testing 的官方文件, 並閱讀近期放置遊戲開發者討論, 工作方法與範例見 [game-balance.md](game-balance.md), 以下保留原始來源與採用理由, 相依與安裝流程由工具來源維護
+
+起手方式為共用正式規則的模擬器, 試算表與專案測試, 保留不同策略, 未達成目標的路徑與試玩, 不從單一平均或參數搜尋結果判斷遊戲體驗
+
+以下於 2026-10-05 查閱, 官方文件支持工具能力, 社群自述用來理解實際工作方式
+
+| 來源 | 支持的內容 | 採用方式 |
+|---|---|---|
+| [NumPy random](https://numpy.org/doc/stable/reference/random/index.html) | Generator 與抽樣介面 | 固定 RNG 實作與輸入, 比較隨機路徑 |
+| [SciPy differential evolution](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.differential_evolution.html), [bootstrap](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.bootstrap.html) | 搜尋與重抽樣統計 | 候選參數搜尋, 另保留驗證情境與不確定性 |
+| [SymPy lambdify](https://docs.sympy.org/latest/modules/utilities/lambdify.html) | 符號運算式與數值計算的銜接 | 先推導再對照實際核心, 輸入為已核對的模型 |
+| [fast-check model-based testing](https://fast-check.dev/docs/advanced/model-based-testing/) | 操作序列, 縮減與重播參數 | 保留完整的失敗重播資料 |
+| [Hypothesis stateful tests](https://hypothesis.readthedocs.io/en/latest/stateful.html) | 規則與狀態機測試 | Python 模型使用實際狀態不變量 |
+| [Machinations 文件](https://machinations.io/docs), [方案](https://machinations.io/pricing) | 資源流模型與模型公開範圍 | 複雜循環需要時選用, 不公開私有設計 |
+| [Wolfram MCP](https://www.wolfram.com/artificial-intelligence/mcp/) | Local 與 Cloud 的計算接法 | 沿用既有設定並依執行範圍選用 |
+| [SimPy](https://simpy.readthedocs.io/en/latest/), [Optuna](https://optuna.readthedocs.io/en/stable/) | 離散事件與參數最佳化 | 有排隊或大量參數搜尋需求後再加入 |
+| [r/incremental_gamedev: How do you balance your numbers?](https://www.reddit.com/r/incremental_gamedev/comments/1utq0na/how_do_you_balance_your_numbers/) | 使用者分享試算表, 共用核心的 headless 模擬與試玩, 也有人提醒模型可能耗掉開發時間 | 先量測重要選擇之間的時間, 小範圍調整, 保留試玩 |
+| [fast-check 使用者與維護者討論](https://github.com/dubzzz/fast-check/discussions/6166) | Model-based 失敗重播的實際問題 | 對照官方 replay 說明, 不把個人做法當成保證 |
+
 ## Jev 的資料來源
 
 | 來源 | 支持的內容 | 採用方式 |

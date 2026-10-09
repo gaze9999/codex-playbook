@@ -23,7 +23,7 @@ git clone https://github.com/gaze9999/codex-playbook.git
 
 直接閱讀 [開發流程](workflow.md) 與 [提示詞範例](prompts.md), 專案規格、指示與工具各依所屬來源取得, 已有 repository 時先檢查 remote、branch、status 與遠端更新
 
-本 Playbook 的根目錄 AGENTS.md 留在本機並由 .gitignore 忽略, 換電腦維護時依 [指示管理](governance.md) 準備本機規則, research.md 隨 repository 保留作為教學參考
+本 Playbook 的根目錄 AGENTS.md 是公開的專案指示教學範例, 私人設定另留在自己的設定來源, 換電腦維護時依 [指示管理](governance.md) 準備本機規則, research.md 隨 repository 保留作為教學參考
 
 公開工具可使用 [Codex Toolkit 市集或獨立 Python](marketplace.md), 個人環境選項另保存在自己的私人設定來源, 不需要取得作者的私人 repository
 
@@ -40,6 +40,8 @@ Profile 是一組執行設定, 啟用方式依用戶端的實際版本處理, �
 保存本機自訂內容, 確認同步範圍與取代方式後, 使用目標用戶端支援的安裝入口, .system、第三方 Plugin 與自行維護的 Skills 各由所屬來源管理
 
 以相對路徑與內容 hash 比對來源和安裝副本, 鏡像一致證明檔案同步, 重新載入後再確認 Skill 的使用時機與實際產出, 工作流程範例見 [工具化規劃](toolkit-roadmap.md#可搭配的工作流程)
+
+以 Codex Toolkit 的版本管理為例, 個別 Skill 採 SemVer, 與整包 release Tag 分開, 未修改的 Skill 保留版本, metadata 保存 `1.2.3`, 顯示名稱可標為 `Name (v1.2.3)`, 發布 manifest 記錄每項 Skill 的實際版本
 
 ## 4. 依電腦用途選工具
 
@@ -71,6 +73,10 @@ CLI 可直接在終端機使用, MCP 讓 agent 透過工具介面操作, 託管�
 
 公司電腦依允許的資料範圍選工具, credentials 使用環境的正式保存方式, 公司與私人帳戶分開設定
 
+用完後關閉自己建立的臨時 MCP client 與 browser session, 成功, 失敗或取消都清理, 用戶端管理的連線依其生命週期結束, 保留其他正在使用的工作
+
+例如 Codex Toolkit 的 Serena 安裝設定停用 dashboard 與 GUI log window, 啟動參數包含 `--enable-web-dashboard false --enable-gui-log-window false`, 避免 Windows 為每條連線建立系統匣圖示, 依實際安裝版本核對設定
+
 ## 6. 更新已安裝工具
 
 核對目前版本、更新來源、相容性與本機自訂內容, 使用該工具支援的預覽或更新方式, 套用前確認範圍並保存必要備份
@@ -82,6 +88,12 @@ Windows 更新 CLI 後確認命令位置與版本, 調整 PATH 前先備份並�
 ## 7. 套用介面中的設定
 
 共用 Git 提示詞、記憶偏好與分支設定依目標介面提供的欄位套用, 產生設定片段時先核對相容性, 備份後再合併, 保留 model、provider、MCP、permissions 與其他設定
+
+### 選用原生入口與私人設定來源
+
+Plugin 的安裝、啟用與更新使用 Codex 支援的原生入口, 公開來源與操作見 [Toolkit 市集](marketplace.md), MCP 相依與註冊依 [Toolkit CLI](https://github.com/gaze9999/codex-toolkit/blob/main/docs/setup/cli.md) 逐項處理
+
+自己的 Global、角色與 Desktop Git 提示詞保存在私人設定來源, 套用前產生差異或設定片段, 確認範圍後備份並合併, 保留其他設定與本機自訂內容, 還原方式見 [Toolkit Profile 指引](https://github.com/gaze9999/codex-toolkit/blob/main/docs/restore.md)
 
 ChatGPT 帳戶指示、Project、雲端記憶與 Work 寫作風格在各自介面設定, 範例及位置見 [web-settings.md](web-settings.md)
 
