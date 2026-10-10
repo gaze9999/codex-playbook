@@ -85,7 +85,7 @@ Global 層在 Codex home 選取第一份非空指示, 優先使用 AGENTS.overri
 
 穩定規則留在適用指示, Skill 保存有明確使用時機的流程, 細節放在按需閱讀的參考文件, 角色設定只補充該角色的責任與必要設定
 
-已設定定期來源維護時, 依指定頻率收集官方、社群與 Power User 實務, 核對後更新指定 Space 或文件的相關段落. 修改時按需查相關已核對內容與實際專案來源, 遇版本、時效、衝突、證據缺口或明確查證要求再補查一手. 查日期、情境與原始證據, 區分規格、實測與意見, 依既有規格及授權採用, 排程與文件更新不增加 Git、安裝或設定套用授權. 參考 [官方最佳實務](https://learn.chatgpt.com/guides/best-practices)、[進階使用實作](https://github.com/steipete/agent-scripts)及 [社群來源同步案例](https://github.com/dep/agent-rules)
+已設定定期來源維護時, 依指定頻率收集官方、社群與 Power User 實務, 核對後更新指定 Space 或文件的相關段落. 修改工作規範、工具或行為前, 依 [維護前查閱研究](shared-workflow.md#維護前查閱研究) 讀取相關已收集內容, 證據不足再補查必要一手來源. 區分規格、實測與意見, 依既有規格及授權採用, 排程與文件更新不增加 Git、安裝或設定套用授權. 參考 [官方最佳實務](https://learn.chatgpt.com/guides/best-practices)、[進階使用實作](https://github.com/steipete/agent-scripts)及 [社群來源同步案例](https://github.com/dep/agent-rules)
 
 路徑、版本、角色與檢查項目可從專案確認時, 指示保存查核條件, 只固定必要的規格、資料邊界與已確認決策. 範例、檔案長度與角色名稱不決定每次的流程, 簡化回覆則刪除重複, 保留修改及理由、實測範圍與結果、交付狀態和必要下一步. 收尾對照整個有效任務, 追加提問與局部延期只影響指涉項目
 
