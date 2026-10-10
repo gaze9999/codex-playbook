@@ -30,6 +30,24 @@ ChatGPT Project 的檔案透過上傳或連接提供, 本機 Codex 依工作目�
 
 例如, 所有專案都要使用台灣用語, 放 Global, 只有訂單模組的 API 欄位要求, 放專案規格, 本次查詢頁的修改進度, 留在對話或現有任務紀錄
 
+## 回覆格式與互動呈現
+
+跨專案的回覆偏好放 Global, ChatGPT 帳戶與既有 GPT 則保存於各自指示, 各專案只補充真正不同的交付格式. 詳細判斷見 Toolkit 的 [回覆呈現參考](https://github.com/gaze9999/codex-toolkit/blob/main/skills/agent-governance/references/response-presentation.md), 原生語法依目前用戶端與工具指引
+
+| 目的 | 適合的呈現 |
+|---|---|
+| 一般回答、計畫、進度與回報 | Markdown 段落或清單 |
+| 共通欄位的選項比較 | Markdown 表格 |
+| 靜態流程與關係 | 支援的 Mermaid 或可攜圖檔 |
+| 調整輸入與探索變化 | 可用的互動圖表, 留來源、單位與假設 |
+| 可獨立使用的訊息或文件完成稿 | 支援的 writing block 或單一完整可複製區塊 |
+| 必要輸入或後續操作 | 實際可用的原生提問 / 操作入口 |
+| 保存、編輯與正式交付 | 真正可用的檔案或指定成果 |
+
+聊天正文用 Markdown, 清單、表格與圍欄留必要空行, `details` / `summary` 等 HTML 排版可能直接顯示為文字, 原始碼與引用保留. 重點、來源及必要操作直接可讀, 不自造 directive、假按鈕或保存功能, 介面無法呈現時提供可讀文字或實際成果
+
+[Intelligent UI](https://help.openai.com/en/articles/20001598-intelligent-ui-in-chatgpt) 在支援的 Chat 組合文字、圖形、按鈕、表單與互動, [Visualizations](https://learn.chatgpt.com/docs/visualizations) 是另一個依介面與帳戶開放的入口, Work / Codex 按各自實際能力選用. 模型型號、本機指示同步與帳戶功能分開核對, 不以互動預覽取代指定檔案
+
 ## Codex 如何讀取 AGENTS.md
 
 Codex 在啟動時建立指示鏈, 核對目前工作目錄, 實際來源與設定的大小限制, 確認適用指示已載入
@@ -46,7 +64,7 @@ Global 層在 Codex home 選取第一份非空指示, 優先使用 AGENTS.overri
 
 共用的專案規則可納入版本控制, 讓團隊與其他 checkout 取得同一份規則, 個人路徑, 本機狀態與私人操作安排則保留在本機
 
-本 Playbook 的根目錄 AGENTS.md 作為本機維護指示, 由 .gitignore 忽略, 公開教學與研究參考保存在其他 Markdown 文件
+本 Playbook 的根目錄 AGENTS.md 是已納入版控的公開指示範例, 保存中性的文件維護與資料邊界, 個人設定及機器資訊留在本機或私人來源
 
 已受追蹤的檔案要先取消追蹤再加入忽略規則, 詳見 [Git 官方說明](https://git-scm.com/docs/gitignore)
 
@@ -59,6 +77,8 @@ Global 層在 Codex home 選取第一份非空指示, 優先使用 AGENTS.overri
 ## Skill, 角色與共用程式的分工
 
 穩定規則留在適用指示, Skill 保存有明確使用時機的流程, 細節放在按需閱讀的參考文件, 角色設定只補充該角色的責任與必要設定
+
+同一流程的小型來源比對或狀態判斷可放在既有 Skill 的 references, 有獨立交付與驗收才另設入口. 依實際專案與選定工具載入平台 / SDK 專用 Skill, Agent、React、環境變數或圖表等一般關鍵字不會決定 provider、Framework、代管服務或帳戶開通, 選定工具後遵守其必要前置流程
 
 確定的輸入能得到可測試的固定結果時, 可抽成共用程式, 供 CLI, GUI, MCP 與 Skill 使用, 例如檔案 hash 比對與 Markdown 結構檢查, 詳見 [工具化規劃](toolkit-roadmap.md)
 

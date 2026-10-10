@@ -46,12 +46,13 @@
 | angular-development / angular-member-order | 依實際 Angular 版本處理元件、表單與串接 / 安全整理成員順序 |
 | react-development / vue-development | 依實際 Framework、state 與 rendering 邊界開發及驗證 |
 | system-design-analysis | 整理需求, 領域模型, 資料一致性與架構取捨 |
-| research-learning-synthesis | 整合官方資料, 社群與論文, 保存反例與先備概念 |
+| research-learning-synthesis | 按問題選用 [官方、社群、論文、原始碼與實測來源](https://github.com/gaze9999/codex-toolkit/blob/main/skills/research-learning-synthesis/references/source-selection.md), 保存版本、反例與先備概念 |
 | development-tool-setup | 檢查並設定一項選定工具的相依與連接 |
 | multilingual-proofreading | 校對繁中, 英文與日文的用詞, 標點與語意 |
-| ui-ux-design | 從代表流程改善介面, 文案, 響應式與鍵盤操作 |
+| ui-ux-design | 從代表流程改善介面, 文案, 響應式與鍵盤操作, 即時表格另查 [資料列身分、排序、焦點與無障礙](https://github.com/gaze9999/codex-toolkit/blob/main/skills/ui-ux-design/references/detail-review.md#streaming-tables-and-details) |
+| test-strategy | 規劃改動所需的檢查, 效能與串流更新按需採用 [可比實驗、資源歸屬與長時間診斷](https://github.com/gaze9999/codex-toolkit/blob/main/skills/test-strategy/references/performance-and-streams.md) |
 | game-balance-simulation | 沿用實際遊戲規則比較策略、進度與隨機獎勵, 保留重播條件 |
-| document-source-matching / validation-evidence-review | 核對文件來源 / 檢視既有驗證證據, 保留版本與涵蓋範圍 |
+| local-document-processing / validation-evidence-review | 處理文件與唯讀比對來源 / 檢視既有證據與環境差異, 保留版本與涵蓋範圍 |
 | network-filter-rules | 依目標解析器維護阻擋或 rewrite 規則, 檢查誤判 |
 
 提示詞評估可擴充 ai-application-engineering 的參考流程, Coding 交接提示詞由 coding-prompt 處理
@@ -68,9 +69,8 @@ Stable Diffusion / ComfyUI 沿用 comfyui-workflow, Unity 專案沿用 unity-dev
 
 | Skill / 群組 | 目前方向 | 實作前要確認 |
 |---|---|---|
-| document-source-matching | 沿用文件定位與來源比對工具 | 原始文件, 抽出版與缺漏情況 |
-| environment-consistency-check | 沿用目錄與檔案比對工具 | 相對路徑, hash 與差異種類 |
-| validation-evidence-review | 沿用驗證紀錄索引 | 結果對應的內容版本與環境 |
+| local-document-processing | 沿用文件定位、來源比對與文件處理核心 | 原始文件, 抽出版、缺漏與授權輸出 |
+| validation-evidence-review | 沿用驗證紀錄索引與唯讀環境比對 | 內容版本、相對路徑、hash、差異與涵蓋 |
 | document-production | 有既有工具時沿用 Markdown 結構檢查核心 | 其他格式的內容與渲染檢查 |
 | context-brief | 比較既有文字抽取與 OCR 工具 | 格式, metadata, 相依與失敗處理 |
 | doc-updater | 評估抽出 Git 變更分類與安全寫入 | 整檔或章節更新, 備份與衝突處理 |
@@ -90,13 +90,15 @@ Stable Diffusion / ComfyUI 沿用 comfyui-workflow, Unity 專案沿用 unity-dev
 
 比較使用時機與交付物, 同一入口的詳細情境可移到參考文件, 有相同目的且反覆一起使用的流程再評估合併
 
+保留必要規則, 精簡決策依 [代表任務與版本比較](https://github.com/gaze9999/codex-toolkit/blob/main/skills/agent-governance/references/component-authoring.md#evaluate-instruction-utility) 核對. 檔案變短、Skill 被讀取與任務成功是不同證據, 評估時分開看適用條件、實際行為、交付結果及完整用量, 研究中的單次任務模組數量不設為整個 Plugin 或安裝清單的上限
+
 | 群組 | 各自保留的責任 |
 |---|---|
 | agent-governance / task-routing | 維護規則與角色 / 安排當次工作 |
 | readme-maintainer / doc-updater / document-production | 重整 README / 同步變更 / 製作文件 |
 | context-brief / task-guide / coding-prompt | 規格摘要 / 功能工作指引 / 單次交接 |
 | angular-development / system-design-analysis / research-learning-synthesis | Framework 實作與按需架構 / 系統取捨 / 證據整理 |
-| document-source-matching / environment-consistency-check / validation-evidence-review | 文件來源 / 內容比對 / 驗證證據 |
+| local-document-processing / validation-evidence-review | 文件處理與來源比對 / 既有證據與環境差異, 各依工作模式保留讀寫範圍 |
 
 Skills 的發布組合包保留獨立目錄, 每項清單、metadata 與版本由其維護來源管理
 

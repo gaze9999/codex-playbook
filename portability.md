@@ -105,6 +105,8 @@ ChatGPT 帳戶指示、Project、雲端記憶與 Work 寫作風格在各自介�
 
 本機工作樹快照可用來試行尚未提交的修改, 需明確標示來源 HEAD 與未提交內容. 正式發布另依乾淨已提交來源及發布驗收, 本機同步不代表其他電腦已更新
 
+先核對市集來源類型. GitHub 安裝的 Plugin 在來源發布後使用原生市集 / Plugin 入口更新, 保留 Git 來源. 已註冊的本機市集才使用限定工作樹快照同步, 不為立即套用未發布內容自動切換來源, 詳細操作見 [Toolkit Plugin 更新](https://github.com/gaze9999/codex-toolkit/blob/main/docs/plugins.md#已安裝-plugin-更新)
+
 驗證工具記錄實際使用的 interpreter、版本與必要相依, 既有相容環境可重用, 工具或 bundled runtime 更新後先確認能力是否仍存在. 來源正確、同步一致、安裝成功與新對話載入分別核對
 
 ## 8. 換機後開始工作
