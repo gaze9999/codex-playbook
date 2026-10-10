@@ -14,6 +14,8 @@ ChatGPT Project 的檔案透過上傳或連接提供, 本機 Codex 依工作目�
 
 帳戶設定範例見 [web-settings.md](web-settings.md), 本機安裝與換機見 [portability.md](portability.md)
 
+跨專案追蹤、可攜來源及排程文件維護見 [共用工作流](shared-workflow.md), 更新同一份現行內容, 教學保留通用方法與合成範例
+
 修改後依各環境分別記錄檔案已保存, 設定已套用, 帳戶已授權與實際呼叫結果, 需要手動操作的項目列出位置與下一步, 用對應證據確認生效
 
 ## 每一層保存什麼
@@ -66,6 +68,8 @@ Global 層在 Codex home 選取第一份非空指示, 優先使用 AGENTS.overri
 
 本 Playbook 的根目錄 AGENTS.md 是已納入版控的公開指示範例, 保存中性的文件維護與資料邊界, 個人設定及機器資訊留在本機或私人來源
 
+尚未確認的修改可放本機開發分支, 確認後才依授權進入 main. 公開儲存庫的遠端分支同樣公開, 需要私人保存時可使用共用私人來源, 記錄目標儲存庫、基準版本與逐檔 hash, 在目標電腦定位 checkout 並比對差異後套用. 固定磁碟與絕對路徑留在本機, 正式程式與發布責任仍屬於各專案. [GitHub 可見性說明](https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories)
+
 已受追蹤的檔案要先取消追蹤再加入忽略規則, 詳見 [Git 官方說明](https://git-scm.com/docs/gitignore)
 
 ## 規格與實作的時間線
@@ -77,6 +81,10 @@ Global 層在 Codex home 選取第一份非空指示, 優先使用 AGENTS.overri
 ## Skill, 角色與共用程式的分工
 
 穩定規則留在適用指示, Skill 保存有明確使用時機的流程, 細節放在按需閱讀的參考文件, 角色設定只補充該角色的責任與必要設定
+
+已設定定期來源維護時, 依指定頻率收集官方、社群與 Power User 實務, 核對後更新指定 Space 或文件的相關段落. 修改時按需查相關已核對內容與實際專案來源, 遇版本、時效、衝突、證據缺口或明確查證要求再補查一手. 查日期、情境與原始證據, 區分規格、實測與意見, 依既有規格及授權採用, 排程與文件更新不增加 Git、安裝或設定套用授權. 參考 [官方最佳實務](https://learn.chatgpt.com/guides/best-practices)、[進階使用實作](https://github.com/steipete/agent-scripts)及 [社群來源同步案例](https://github.com/dep/agent-rules)
+
+路徑、版本、角色與檢查項目可從專案確認時, 指示保存查核條件, 只固定必要的規格、資料邊界與已確認決策. 範例、檔案長度與角色名稱不決定每次的流程, 簡化回覆則刪除重複, 保留修改及理由、實測範圍與結果、交付狀態和必要下一步. 收尾對照整個有效任務, 追加提問與局部延期只影響指涉項目
 
 同一流程的小型來源比對或狀態判斷可放在既有 Skill 的 references, 有獨立交付與驗收才另設入口. 依實際專案與選定工具載入平台 / SDK 專用 Skill, Agent、React、環境變數或圖表等一般關鍵字不會決定 provider、Framework、代管服務或帳戶開通, 選定工具後遵守其必要前置流程
 

@@ -51,6 +51,7 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 使用�
 | 複製 coding prompt, 對照預期交付與回報示意 | [提示詞範例](prompts.md) |
 | 加入公開市集或獨立使用 Python 工具 | [市集與獨立工具](marketplace.md) |
 | 換電腦, 安裝 Skills 或連接 MCP | [安裝與換機](portability.md) |
+| 跨專案追蹤與定時文件更新 | [共用工作流](shared-workflow.md) |
 | 決定規則, 規格與進度要放哪裡 | [指示與紀錄管理](governance.md) |
 | 將對話中的方法整理成可重用教學 | [對話轉教學](governance.md#從對話提煉教學), [提示詞範例](prompts.md#從目前對話整理教學) |
 | 納入中途更正並恢復未完成工作 | [中途修正](workflow.md#8-納入中途修正), [補充需求範例](prompts.md#中途補充與更正) |
