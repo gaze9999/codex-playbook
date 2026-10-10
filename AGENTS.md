@@ -2,7 +2,7 @@
 
 - This file is intentionally public as a project-instruction teaching example. Keep it generic and exclude private configuration.
 
-- When opened independently, explicitly read `../AGENTS.md` if it exists with the heading `個人專案工作區`. Standalone clones follow global guidance and this file without requiring a parent file.
+- Read `../AGENTS.md` when titled `Codex Workspace` or `個人專案工作區`. Standalone clones follow Global and this file without requiring a parent file.
 
 ## Documentation boundaries
 
