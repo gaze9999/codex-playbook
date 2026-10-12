@@ -2,7 +2,7 @@
 
 這份文件保留原始來源, 採用理由與適用範圍, 可用來準備教學, 比較工作方法或追查一項決策
 
-第一節的官方文件, Jev 來源與兩篇標示回查的實務文章於 2026-10-05 閱讀, 日期代表查閱時間, 延伸閱讀保留先前的 2026-10-02 紀錄
+第一節的官方文件, Jev 來源與兩篇標示回查的實務文章於 2026-10-05 閱讀, 日期代表查閱時間, 延伸閱讀保留先前的 2026-10-02 紀錄, 後續回查日期另標於相關主題
 
 ## 官方能力與採用理由
 
@@ -27,7 +27,7 @@ Test Impact Analysis 的文件列有 Visual Studio Test 與 .NET Framework 等�
 | 來源 | 查閱紀錄 | 可帶入教學的問題 |
 |---|---|---|
 | [r/codex: How I set up Codex subagents without overusing them](https://www.reddit.com/r/codex/comments/1ujjcxh/how_i_set_up_codex_subagents_without_overusing/) | 2026-10-05 回查, 個人使用自述 | 子工作怎麼定範圍, 為什麼小工作直接做, 如何在穩定的版本上審查 |
-| [Peter Steinberger: Shipping at Inference-Speed](https://steipete.me/posts/2025/shipping-at-inference-speed) | 2026-10-05 回查, 作者工作經驗 | 如何用短需求與畫面反覆調整, 將重要功能知識保存在專案文件 |
+| [Peter Steinberger: Shipping at Inference-Speed](https://steipete.me/posts/2025/shipping-at-inference-speed) | 2026-10-12 回查, 作者工作經驗 | 如何用短需求與畫面反覆調整, 將重要功能知識保存在專案文件 |
 | [r/codex: 實際部署 subagent](https://www.reddit.com/r/codex/comments/1ujov69/how_do_you_actually_deploy_subagents_in_codex/) | 2026-10-02 閱讀紀錄 | 探討分工的使用情境與交接成本 |
 | [r/ClaudeCode: Where do subagents pay off](https://www.reddit.com/r/ClaudeCode/comments/1ur70w0/where_do_subagents_actually_pay_off_in_typical/) | 2026-10-02 閱讀紀錄 | 比較閱讀隔離與跨工作協調 |
 | [r/ClaudeCode: To subagent or not](https://www.reddit.com/r/ClaudeCode/comments/1sr9c7k/to_subagent_or_not_to_subagent/) | 2026-10-02 閱讀紀錄 | 哪些工作值得拆分, 哪些直接完成 |
@@ -36,6 +36,19 @@ Test Impact Analysis 的文件列有 Visual Studio Test 與 .NET Framework 等�
 | [OpenAI Skills 與 prompt 指引](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra) | 2026-10-02 閱讀紀錄, 特定 model 的官方建議 | 檢視 Skill 的使用時機與常駐指示長度 |
 
 社群貼文中的 model, effort 與設定屬於作者當時環境, 教學使用其工作問題與分工方法, 實作時回到官方文件及目前專案確認
+
+## 中途訊息、載入與檔案檢查
+
+以下來源於 2026-10-12 查閱, 分別支持 [中途修正](workflow.md#8-納入中途修正)、[載入核對](portability.md#確認目前對話是否已載入) 與 [ZIP 上傳檢查](zip-upload-validation.md)
+
+| 來源 | 支持的內容 | 採用方式 |
+|---|---|---|
+| [OpenAI Steer / Queue](https://learn.chatgpt.com/docs/prompting#steering-and-queuing) | Steer 加入目前執行, Queue 留到下一次執行 | 將訊息送達方式與工作範圍判斷分開 |
+| [OpenAI Skills](https://learn.chatgpt.com/docs/build-skills) | Skill 探索與按需載入 | 分開確認可用清單、安裝內容與本次讀取 |
+| [MDN Blob.type](https://developer.mozilla.org/en-US/docs/Web/API/Blob/type) | 類型可能依副檔名判定, 也可能為空字串 | 名稱與 MIME 僅作前端篩選, 明定空 MIME 的處理 |
+| [MDN accept](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/accept) | 檔案選擇提示不執行類型驗證 | 選取後仍檢查, 上傳端另核對要求 |
+| [IANA application/zip](https://www.iana.org/assignments/media-types/application/zip) | 登錄的 ZIP MIME 名稱 | 使用 application/zip, 額外相容類型由範例清單明定 |
+| [PKWARE ZIP APPNOTE](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT) | EOCD、ZIP64、中央目錄與 local header 欄位, 空 ZIP 的規則 | 示範記錄定位並標出未涵蓋的完整驗證 |
 
 ## 遊戲開發與數值研究
 
