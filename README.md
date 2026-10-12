@@ -63,6 +63,7 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 使用�
 | 決定新增 Skill 或抽出通用工具 | [工具化規劃](toolkit-roadmap.md) |
 | 選擇 Skill、CLI、MCP 或 Plugin | [工作能力與介面選擇](toolkit-roadmap.md#按任務選工具介面) |
 | 比較遊戲策略、成長節奏與隨機獎勵 | [遊戲數值與模擬](game-balance.md) |
+| 理解 ZIP 結構檢查與簡化上傳類型檢查 | [ZIP 上傳檢查範例](zip-upload-validation.md) |
 
 先讀與目前任務相關的頁面, 詳細資料在需要時再補
 
