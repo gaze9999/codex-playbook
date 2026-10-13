@@ -23,6 +23,8 @@
 
 完整操作方式見 [開發流程](workflow.md), 其他任務可使用 [提示詞範例](prompts.md)
 
+需要理解每階段輸入與產物、Agent 分工、文件分層及跨裝置接續時, 從 [可持續的 AI 開發流程](ai-workflow.md) 開始
+
 ## 先理解幾個名詞
 
 | 名詞 | 在這份指南中的意思 |
@@ -48,6 +50,9 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 使用�
 | 你現在要做什麼 | 閱讀入口 |
 |---|---|
 | 完成一個功能或修正問題 | [開發流程](workflow.md) |
+| 理解整段流程、輸入產物與 Agent 分工 | [可持續的 AI 開發流程](ai-workflow.md) |
+| 使用 Goal / Plan、跨模型與控制漂移 | [進階工作方式](codex-advanced.md) |
+| 規劃文件、格式轉換、個人慣例與協作進度 | [文件與慣例](documentation.md) |
 | 複製 coding prompt, 對照預期交付與回報示意 | [提示詞範例](prompts.md) |
 | 加入公開市集或獨立使用 Python 工具 | [市集與獨立工具](marketplace.md) |
 | 換電腦, 安裝 Skills 或連接 MCP | [安裝與換機](portability.md) |
