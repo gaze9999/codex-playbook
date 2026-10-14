@@ -27,6 +27,23 @@ git clone https://github.com/gaze9999/codex-playbook.git
 
 公開工具可使用 [Codex Toolkit 市集或獨立 Python](marketplace.md), 個人環境選項另保存在自己的私人設定來源, 不需要取得作者的私人 repository
 
+### 用私人 workspace 管理相關儲存庫
+
+需要共同開發、共用介面或跨專案協調時, 用私人父 repo 保存管理規範、子專案索引、角色來源與已審查的 submodule 指標, 各子 repo 保留自己的程式、歷史、版本與發布責任, 彼此沒有共同工作需求時可維持獨立 repo
+
+| 層級 | 保存內容與責任 |
+|---|---|
+| Global | 跨專案偏好、授權與交付原則 |
+| 私人 workspace | 需求分配、owner、相依、共用引用與整合驗收 |
+| 子 repo | 自身架構、介面、實作、驗證與公開邊界 |
+| 角色 / 條件式參考 | 必要的工作差異與方法, 可用角色不自動授權派工 |
+
+共用 UI 可在需要的私人 workspace 各保留一份 checkout, 正式來源由同一儲存庫維護, 每份 checkout 的 branch、dirty 內容、父層 gitlink 與應用載入的版本/hash 各自核對, 不因資料夾同名就推定已同步或使用最新版本
+
+公開子 repo 的私人工作規範放在私人父層, 本機入口只引用適用來源並精確排除版控, 子 repo 自有的已追蹤規範維持其 ownership, 明確散布的中性 Skill / Plugin 與範本另依公開來源維護. 私人父 repo 不改變公開子 repo 的可見性, 公開 diff、歷史及產物仍需核對, 私人 UI 來源與設定不隨公開工具散布
+
+Codex 專案可將 workspace 設為主要來源以協調子專案, 主要資料夾決定預設 Git 與指示/config 探索, 次要資料夾要明確讀取及配對, worktree / Handoff 不自動隔離所有子 repo, 見 [Projects](https://learn.chatgpt.com/docs/projects) 與 [Worktrees](https://learn.chatgpt.com/docs/environments/git-worktrees). 修改時先確認實際子 repo, 提交並核對子 repo 遠端後再更新父層指標, 還原使用已審查基準, 不讓父子索引追逐彼此最新 SHA
+
 ## 2. 準備 Global 指示與角色設定
 
 確認目標用戶端使用的 Global 指示與角色設定位置, 先備份現有內容, 比對可攜來源後合併需要的規則, 保留 model、provider、MCP、permissions 與登入資料
@@ -120,6 +137,14 @@ ChatGPT 帳戶指示、Project、雲端記憶與 Work 寫作風格在各自介�
 | 實際使用更新後的 Desktop Git 指示產生文字 | 該次操作已取得指示, 另核對是否符合新內容 |
 
 Skills 採按需載入, 清單存在、安裝檔可讀與本次已使用完整流程分開回報, 見 [官方 Skills 說明](https://learn.chatgpt.com/docs/build-skills). 用戶端未提供目前對話的載入狀態或重新探索入口時, 保留未驗證項目, 重新載入後再在目標對話核對, 另一個 CLI 程序的清單不能證明已開啟對話的狀態
+
+### 遷移專案資料夾與清理舊入口
+
+先核對正在使用的專案來源、可寫 roots、checkout/worktree 與檔案引用, 用目前版本支援的專案設定或 API 更新, 讀回保存內容, 再確認執行中的 App 採用與相關入口操作, 另一個 CLI / App Server 的結果只證明該程序狀態
+
+歷史路徑先依來源、actor、封存/執行狀態及目前引用分辨用途, 系統審查、subagent 歷史與備份保留原始證據, 不因出現舊路徑就重啟工作或改權限. 查核使用不恢復工作的讀取入口, [App Server 的 thread/read](https://learn.chatgpt.com/docs/app-server#read-a-stored-thread-without-resuming) 與 resume 行為不同, 參數依目前 client/schema 核對
+
+Windows 磁碟路徑、延伸前綴與 URI/cache key 依欄位規格比對, 只改選定欄位, 保存 hash 與備份, 套用前重查, 映射碰撞或同時修改就停止. 有效引用及使用端驗證通過後, 核對連結 ownership、類型與確切 target, 只移除相容連結本身, 保留實體資料、其他 worktree 與歷史, 再檢查正式入口
 
 ## 8. 換機後開始工作
 
