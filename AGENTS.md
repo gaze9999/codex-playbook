@@ -10,7 +10,7 @@
 
 - Maintain teaching material, decision rationale and de-identified examples. Public Skills, Plugins, installers, MCP adapters and standalone Python tools belong to `codex-toolkit`; personal governance/restoration choices belong to private configuration sources. Do not copy executable or private material here.
 - Read relevant documents, links and Git status/diff before editing. Preserve concurrent changes and stay within authorized documentation scope.
-- Before workflow, instruction or tool-selection teaching changes, read `shared-workflow.md` maintenance-evidence conditions and the relevant approved collected research when configured. Pure wording fixes can reuse compatible evidence; standalone use does not require private tracking access.
+- For workflow, instruction or tool-selection teaching changes, apply `shared-workflow.md` evidence conditions. Lookup/collected-research records are optional when duplicate data or repeated lookup is a concern; direct source checks need no ledger step. Pure wording fixes may reuse compatible evidence; standalone use requires no private tracking access.
 - Deliver documents in Taiwan Traditional Chinese with half-width English punctuation, spacing and no sentence-final periods. Preserve conventional English terms.
 - Keep each prompt example in one complete `text` fenced block, retaining placeholders and authorization boundaries without requiring a fixed questionnaire.
 - Use generic modules and sample data. Exclude company/project/transaction identifiers, personal absolute paths, chat IDs, private endpoints, secrets and transcripts.
