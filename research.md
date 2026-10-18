@@ -16,6 +16,7 @@
 | [OpenAI Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents) | 子工作分工, 結果彙整與平行寫入的協調 | 先教單 agent 完成流程, 再練習可獨立驗收的分工 |
 | [Microsoft Test Impact Analysis](https://learn.microsoft.com/en-us/azure/devops/pipelines/test/test-impact-analysis?view=azure-devops) | 依程式碼與測試的相依關係選擇受影響測試 | 用來說明按變更選測試, 該工具的支援範圍另依文件核對 |
 | [Git gitignore](https://git-scm.com/docs/gitignore) | 忽略未追蹤檔案, 已追蹤檔需先從 index 移除 | 說明本機指示檔, 備份與公開文件如何分開管理 |
+| [Firecrawl 連線方式](https://docs.firecrawl.dev/mcp-server)與 [keyless MCP](https://docs.firecrawl.dev/mcp-server/keyless) | 2026-10-17 查核, 支援原生 connector、OAuth 或 API key, keyless 僅提供受限工具, 工具範圍依實際連線及方案核對 | 將已認證 App 納入公開網頁查找選項, 分開確認其他 MCP 的認證、team 與額度, 安裝不代表成功呼叫, 換入口不推定免費 |
 | [textlint MCP](https://textlint.org/docs/mcp/) | 使用已設定的規則檢查文字或檔案 | 先準備詞表與標點規則, 修正後再跑檢查 |
 
 Test Impact Analysis 的文件列有 Visual Studio Test 與 .NET Framework 等支援條件, 教學採用的是依相依選擇測試的方法, 前端或其他語言使用各專案的測試工具
