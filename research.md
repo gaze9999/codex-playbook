@@ -17,6 +17,10 @@
 | [Microsoft Test Impact Analysis](https://learn.microsoft.com/en-us/azure/devops/pipelines/test/test-impact-analysis?view=azure-devops) | 依程式碼與測試的相依關係選擇受影響測試 | 用來說明按變更選測試, 該工具的支援範圍另依文件核對 |
 | [Git gitignore](https://git-scm.com/docs/gitignore) | 忽略未追蹤檔案, 已追蹤檔需先從 index 移除 | 說明本機指示檔, 備份與公開文件如何分開管理 |
 | [Firecrawl 連線方式](https://docs.firecrawl.dev/mcp-server)與 [keyless MCP](https://docs.firecrawl.dev/mcp-server/keyless) | 2026-10-17 查核, 支援原生 connector、OAuth 或 API key, keyless 僅提供受限工具, 工具範圍依實際連線及方案核對 | 將已認證 App 納入公開網頁查找選項, 分開確認其他 MCP 的認證、team 與額度, 安裝不代表成功呼叫, 換入口不推定免費 |
+| [OpenAI approvals and security](https://learn.chatgpt.com/docs/agent-approvals-security) | 2026-10-21 核對, command sandbox、approval、網路授權與 proxy 分開, 命令網路不涵蓋所有工具管道 | 先辨識本機 / 雲端與 shell / App / MCP / 瀏覽器, 不由單一結果推論全部路徑或自行放寬權限 |
+| [OpenAI 評估實務](https://developers.openai.com/api/docs/guides/evaluation-best-practices#llm-as-a-judge-and-model-graders) | 2026-10-21 核對, Judge 可能受順序及篇幅影響, 需對照人工標記 | 獲准比較時加入換序與篇幅對照, 分列錯誤放行、人工一致及總成本, 不以分數取代可執行驗收, 尚未進行模型試驗 |
+| [openpyxl 公式](https://openpyxl.readthedocs.io/en/stable/simple_formulae.html)及 [XlsxWriter 結果](https://xlsxwriter.readthedocs.io/working_with_formulas.html) | 2026-10-21 核對, 寫公式、快取值與目的 client 實際重算分開 | 文件需要計算結果時另核對重算、引用與必要物件保留, 未做文件實測 |
+| [Storybook a11y](https://storybook.js.org/docs/writing-tests/accessibility-testing) | 2026-10-21 核對, todo 不產生 CI 的 a11y 輸出或失敗, error 才因違規失敗 | 僅在已有相容 Storybook 的專案核對實際模式、版本及 story / 狀態範圍, 未做產品驗證 |
 | [textlint MCP](https://textlint.org/docs/mcp/) | 使用已設定的規則檢查文字或檔案 | 先準備詞表與標點規則, 修正後再跑檢查 |
 
 Test Impact Analysis 的文件列有 Visual Studio Test 與 .NET Framework 等支援條件, 教學採用的是依相依選擇測試的方法, 前端或其他語言使用各專案的測試工具
