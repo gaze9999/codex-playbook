@@ -14,6 +14,10 @@
 | [OpenAI Memories](https://learn.chatgpt.com/docs/customization/memories) | 雲端與本機記憶的不同來源與管理方式 | 必守規則保存在指示, 記憶用來回查 |
 | [OpenAI Projects](https://learn.chatgpt.com/docs/projects) | Project 的指示, 檔案與來源, 本機工作目錄的使用方式 | 新人先分清 ChatGPT Project 與本機專案 |
 | [OpenAI Subagents](https://learn.chatgpt.com/docs/agent-configuration/subagents) | 子工作分工, 結果彙整與平行寫入的協調 | 先教單 agent 完成流程, 再練習可獨立驗收的分工 |
+| [Codex #52241](https://github.com/openai/codex/pull/52241), 上游實作 | 2026-10-21 核對, fork 歷史與當次 Skill / Plugin 快照分開, 省略停用清單沿用父層選擇, 明確清單覆寫 | 先核能力發現再選歷史, 845345b 的回歸範圍不證明實際遠端呼叫、追加權限或省費 |
+| [Projects 記憶模式](https://help.openai.com/en/articles/10169521-projects-in-chatgpt) | 2026-10-21 核對, project-only memory 無 Work, shared project 固定此模式 | 依介面、方案、共享與記憶設定診斷, 保留資料隔離, 未做帳戶實測 |
+| [Codex 設定參考](https://learn.chatgpt.com/docs/config-file/config-reference) | 2026-10-21 核對容量與自動 compaction 觸發欄位, 未設定觸發值時用模型預設 | 異常時保存有效配置與用量證據, 不從畫面容量推定觸發時機或自行提高上限 |
+| [Codex #51835](https://github.com/openai/codex/pull/51835)及 [#53622](https://github.com/openai/codex/pull/53622), 上游實作 | 2026-10-21 核對中斷及延遲遠端輸出處理, 上游測試範圍與本機驗收分開 | 重試前核外部成果, process exit 不代表輸出收齊, 未驗證遠端回滾或使用者 client 行為 |
 | [Microsoft Test Impact Analysis](https://learn.microsoft.com/en-us/azure/devops/pipelines/test/test-impact-analysis?view=azure-devops) | 依程式碼與測試的相依關係選擇受影響測試 | 用來說明按變更選測試, 該工具的支援範圍另依文件核對 |
 | [Git gitignore](https://git-scm.com/docs/gitignore) | 忽略未追蹤檔案, 已追蹤檔需先從 index 移除 | 說明本機指示檔, 備份與公開文件如何分開管理 |
 | [Firecrawl 連線方式](https://docs.firecrawl.dev/mcp-server)與 [keyless MCP](https://docs.firecrawl.dev/mcp-server/keyless) | 2026-10-17 查核, 支援原生 connector、OAuth 或 API key, keyless 僅提供受限工具, 工具範圍依實際連線及方案核對 | 將已認證 App 納入公開網頁查找選項, 分開確認其他 MCP 的認證、team 與額度, 安裝不代表成功呼叫, 換入口不推定免費 |
