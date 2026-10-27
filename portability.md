@@ -44,7 +44,23 @@ git clone https://github.com/gaze9999/codex-playbook.git
 
 Codex 專案可將 workspace 設為主要來源以協調子專案, 主要資料夾決定預設 Git 與指示/config 探索, 次要資料夾要明確讀取及配對, worktree / Handoff 不自動隔離所有子 repo, 見 [Projects](https://learn.chatgpt.com/docs/projects) 與 [Worktrees](https://learn.chatgpt.com/docs/environments/git-worktrees). 修改時先確認實際子 repo, 提交並核對子 repo 遠端後再更新父層指標, 還原使用已審查基準, 不讓父子索引追逐彼此最新 SHA
 
+### 整理分支與選定公開內容
+
+先核對 main、工作分支、stash、未提交內容、其他 worktree 與即時遠端, 查明父 repo、Cloud 配方及部署 workflow 的引用, 保存並驗證完整私人 Git bundle 後, 再比較仍缺的有用內容與目前正式來源
+
+| 比較結果 | 處理方式 |
+|---|---|
+| 已由新版涵蓋或取代 | 保留備份, 未使用且無有效引用時才移除舊分支/stash |
+| 仍有需要的差異 | 併入目前 owner 後驗證, 保留其他修改與原始證據 |
+| 檔案樹相同但歷史不同 | 核對身分/私人路徑清理範圍, 不按提交日期或遠端位置選擇 |
+| 舊歷史會帶回已移除資料 | 只移植允許的差異到清理後主線, 不直接合併整段舊歷史 |
+| main 推送會部署 | 完成該專案發布驗收並取得部署授權, 之前保留工作分支 |
+
+私人 repo 可保留自身工作規範與角色, 選定公開交付則核對檔案/欄位允許清單、產物與實際公開歷史, 私人來源可讀不等於可公開, 完整方法見 [公開與私人交付](https://github.com/gaze9999/codex-toolkit/blob/main/skills/agent-governance/references/public-private-delivery.md#consolidate-branches-and-stashes-when-requested)
+
 ## 2. 準備 Global 指示與角色設定
+
+查到需要使用者確認的身分、帳戶或設定值時, 先列確切結果、來源與預計用途, 等明確確認後才套用, 已確認且仍在原範圍內的選擇沿用
 
 確認目標用戶端使用的 Global 指示與角色設定位置, 先備份現有內容, 比對可攜來源後合併需要的規則, 保留 model、provider、MCP、permissions 與登入資料
 
