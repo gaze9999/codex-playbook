@@ -107,6 +107,10 @@ Goal 文字保持可觀察的結果, 原始規格、詳細案例與證據連到�
 
 子 Agent 的能力與歷史分開核對, 支援 Codex #52241 的版本在 `fork_turns=none` 與 `all` 都承接當次選定的 Skill / Plugin 快照, 不必為了工具目錄而複製全部對話. 先查目錄、Skill 讀取與 MCP 註冊, 再依任務選歷史, 保留停用選擇, 實際遠端呼叫與權限另驗. 這是上游實作與 mock 測試的範圍, 不是本機行為或省費保證
 
+若缺少預期的 Skill, 先核對目前目錄、探索警告、選定路徑與觸發描述, `skills.max_context_tokens` 只限制初始 Skill 目錄, 預設為模型 context 的 2%, context 大小未知時採 8,000 字元, 明確設定上限為 10,000 tokens, 不包含選用後的正文或 AGENTS 指示鏈, 有探索缺口再評估調整, 並分別核對正文讀取、工具 schema、認證與操作權限, 相依宣告本身不代表工具已可用, 見 [設定參考](https://learn.chatgpt.com/docs/config-file/config-reference)
+
+本機 Codex-managed worktree 另需核對被忽略的設定與工作規範入口, `.worktreeinclude` 只複製匹配的 ignored files, 其他 untracked files 不會帶入, ignored `AGENTS.override.md` 自動複製, 來源 symlink 略過且不覆寫目的端既有檔案, 建立後仍須比對必要內容與引用能否解析, 不依範例自動複製憑證, remote 或自行建立的 worktree 另驗, 見 [官方 Worktrees](https://learn.chatgpt.com/docs/environments/git-worktrees)
+
 ChatGPT Project 的入口還受記憶模式影響, 官方文件列 project-only memory 不提供 Work, shared project 固定使用此模式. 遇到入口缺少時先核對產品介面、方案、共享狀態與有效記憶設定, 不以重裝本機 MCP 處理, 也不逕自放寬資料隔離或移出私人內容, 無法驗證帳戶時保留明確交接與待核對條件
 
 ### 壓縮前後如何保持透明
@@ -118,6 +122,8 @@ ChatGPT Project 的入口還受記憶模式影響, 官方文件列 project-only 
 `model_context_window` 表示模型容量, `model_auto_compact_token_limit` 是自動壓縮觸發值, 未設定時用模型預設, 另核對目前 build 支援的 scope 與有效設定. 畫面容量不代表壓縮時機, 異常時留存 client/build、模型、登入方案、設定、壓縮前後用量與相關工具輸出規模, 不直接提高上限或承諾省費
 
 中斷可能停止 cell 與巢狀工具, 但不代表外部寫入已回滾, 重試前先查操作 ID / 回執與目的端成果, 不明結果保留待確認. 遠端 process exit 與尾段輸出收齊也不同, 沿既有 session 支援的方式收集結果並核對產物, 避免為了補輸出而重跑有副作用的命令. 相關官方文件與上游變更見[研究依據](research.md#官方能力與採用理由), 未替使用者帳戶或 client 完成實測
+
+自行串接 Responses API 時, 手動重播需保留完整必要 output items, 適用 GPT-5.4 / GPT-5.5 的長任務也須保留原 assistant `phase`, 不只留 `output_text` 或自行補猜 phase, standalone `/responses/compact` 回傳的整個視窗須原樣接續, server-side input-array chaining 才可依規格移除最新 compaction item 之前的項目, `previous_response_id` 串接不手動剪裁, 見 [phase](https://developers.openai.com/api/docs/guides/reasoning#round-trip-assistant-phase-values) 與 [compaction](https://developers.openai.com/api/docs/guides/compaction), 具體維護步驟見 [Toolkit API 參照](https://github.com/gaze9999/codex-toolkit/blob/main/skills/ai-application-engineering/references/openai-state-and-tools.md)
 
 以下是建議的工作方法, 壓縮、換對話或中斷後需要恢復時才使用:
 
@@ -260,6 +266,10 @@ API 呼叫由 n 次批次化為 ceil(n/b) 次, 固定批次大小 b 時兩者仍
 已知網址直接讀取, 選用 Firecrawl 時可用 Scrape, 多頁或結構化需求才按範圍選 Map、Crawl 或欄位擷取. 沿用已可用且認證完成的入口, App 與獨立 MCP 的帳戶、team、工具及額度分開核對, 預算敏感或大量工作按需查額度. 畫面與互動驗收仍需對應的瀏覽器證據, 本機文件送 hosted Parse 涉及上傳, 依資料授權處理, [研究依據](research.md#官方能力與採用理由)保留來源與適用限制
 
 權限排查先記錄實際執行位置、工具管道與有效政策, 分開核對 shell sandbox、approval、命令網路與 proxy, hosted search、App / MCP 與瀏覽器仍有自己的 client、帳戶及能力限制, 一條路徑成功或失敗不代表其他路徑的狀態, 診斷時保留既有權限與認證, 不為完成探測而放寬設定
+
+Auto-review 只處理實際觸發核准的請求, sandbox 內原已允許的動作不會因此逐筆受審, 審查結果與實際執行各自核對, Computer Use 的 App 核准另依使用者流程, hook 則分清事件、同步 / 背景模式及工具是否已執行, 背景 hook 無法阻擋原操作, `PostToolUse` 拒絕也不能撤銷副作用, Code Mode 可能在工具已執行後才讓 promise 拒絕, 重試前先查產物與回執, 見 [Auto-review](https://learn.chatgpt.com/docs/sandboxing/auto-review) 與 [Hooks](https://learn.chatgpt.com/docs/hooks)
+
+工具延遲載入依 API 分開設定, Responses API 需 `tool_search` 與所選工具的 `defer_loading`, Agents API 的 functions 也需明確選擇, MCP / Plugin 工具則由支援的 model / provider 自動探索, 不將兩種 MCP 設定互用, 也不把延後進入模型 context 當成未傳送到服務端或已取得執行權限, 沿用相同任務比較實際載入集、呼叫結果、usage 與延遲, 見 [Tool search](https://developers.openai.com/api/docs/guides/tools-tool-search)
 
 適合評估 MCP 的功能包括有來源識別的文件檢索、受版本守衛保護的更新、可重算的模擬或驗證結果查詢, 前提是現有工具確有存取缺口, 不因 "讓 AI 使用" 就把任意 shell、任意檔案覆寫或所有個人資料包成一個工具
 
