@@ -91,3 +91,7 @@ AGENTS.md 與 Skill 提供工作指示, MCP 與 CLI 提供執行能力, 使用�
 更新前對照目前環境、相關實作與既有章節, 先修正失效入口, 再補使用時機、判斷方式與驗收範例, 選材方式見 [從來源更新教學](governance.md#從實際來源選擇教學內容)
 
 本 repository 以 main 分支文件作為目前版本, 檢查後依授權 commit 與 push, 需要固定引用時使用 commit permalink
+
+## 公開內容檢查
+
+提交與推送前依 [公開內容檢查](docs/public-content.md) 設定 Git hooks, 執行暫存區與歷史檢查
