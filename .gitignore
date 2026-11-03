@@ -17,3 +17,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 Desktop.ini
+**/.claude/settings.local.json
+**/.codex/config.toml
+**/.codex/auth.json
