@@ -20,3 +20,6 @@ Desktop.ini
 **/.claude/settings.local.json
 **/.codex/config.toml
 **/.codex/auth.json
+CLAUDE.local.md
+**/.claude/worktrees/
+tests/test_public_content.py

@@ -7,7 +7,6 @@ git config --local --get core.hooksPath
 git config --local core.hooksPath .githooks
 python tools/check-public-content.py --index
 python tools/check-public-content.py --history
-python -m unittest discover -s tests -p test_public_content.py
 ```
 
 `pre-commit` 檢查暫存區的實際位元組, 工作目錄後續修改不會取代已暫存內容, `pre-push` 檢查每個待推送分支與 Tag 的完整可達歷史及註記, detached HEAD 也會納入, shallow clone 須先取得完整歷史, 檢查失敗會停止 commit 或 push
@@ -31,3 +30,5 @@ python -m unittest discover -s tests -p test_public_content.py
 檢查器與隔離案例由 [Codex Toolkit](https://github.com/gaze9999/codex-toolkit/blob/main/tools/check-public-content.py) 維護, 各儲存庫保留相同的獨立副本, 不依賴其他 checkout 或網路下載, 更新時比對來源與 hash 並執行既有隔離案例
 
 檢查器 SHA-256: `7035ffeca4c0eb62d46b8db52447e38bd12b65824a7452854135cd2775e9b5d6`
+
+個人偏好放在本機排除清單, 團隊一律不發布的路徑放在 .gitignore, 再以索引與推送前檢查攔下強制加入的檔案, 共用外掛市集入口依專案保留
