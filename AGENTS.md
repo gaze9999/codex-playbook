@@ -8,7 +8,7 @@
 
 - At the start/resumption of cross-conversation work, including user-opened new chats, recover the selected project's goals, decisions and pending acceptance from existing approved tracking. Reconcile actual source/diff and update only material changes in that record. Standalone teaching remains usable without the author's private tracking; do not create a parallel state document or treat old delivery authority as current.
 
-- Maintain teaching material, decision rationale and de-identified examples. Public Skills, Plugins, installers, MCP adapters and standalone Python tools belong to `codex-toolkit`; personal governance/restoration choices belong to private configuration sources. Do not copy executable or private material here.
+- Maintain teaching material, decision rationale and de-identified examples. Public Skills, Plugin sources, MCP adapters and standalone Python tools belong to `codex-toolkit`; installation, restoration and personal choices belong to their setup owner. Do not copy executable or private material here.
 - Read relevant documents, links and Git status/diff before editing. Preserve concurrent changes and stay within authorized documentation scope.
 - For workflow, instruction or tool-selection teaching changes, check actual sources and acceptance evidence. Lookup/collected-research records are optional when duplicate data or repeated lookup is a concern; direct source checks need no ledger step. Pure wording fixes may reuse compatible evidence; standalone use requires no private tracking access.
 - Deliver documents in Taiwan Traditional Chinese with half-width English punctuation, spacing and no sentence-final periods. Preserve conventional English terms.
