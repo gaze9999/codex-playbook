@@ -1,8 +1,9 @@
 # Codex Playbook
 
+Use this file as the project entry. Read the immediate parent’s `AGENTS.md` only when the parent is a trusted workspace and its `governance/projects.json` registers this checkout’s relative path and Git origin, with matching parent repository identity and submodule membership. A directly enclosing personal project root may supply common guidance when identified by the user’s local instructions. Otherwise use Global and this file.
+
 - This file is intentionally public as a project-instruction teaching example. Keep it generic and exclude private configuration.
 
-- Read `../AGENTS.md` when titled `Codex Workspace` or `個人專案工作區`. Standalone clones follow Global and this file without requiring a parent file.
 
 ## Documentation boundaries
 
